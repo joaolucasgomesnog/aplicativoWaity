@@ -1,20 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 
-export default function Metricas() {
+export default function Metricas({pedidos, garcons, mesas}) {
   return (
     <View style={styles.container}>
         <View style={styles.item}>
             <Text style={styles.itemTitle}>Pedidos</Text>
-            <Text style={styles.itemText}>8 pedidos</Text>
+            <Text style={styles.itemText}>{pedidos}</Text>
+            <Text style={styles.itemText}>9 pedido(s)</Text>
         </View>
         <View style={styles.item}>
             <Text style={styles.itemTitle}>Garçons</Text>
-            <Text style={styles.itemText}>6 online</Text>
+            <Text style={styles.itemText}>{garcons}</Text>
+            <Text style={styles.itemText}>5 online</Text>
         </View>
         <View style={styles.item}>
             <Text style={styles.itemTitle}>Mesas</Text>
-            <Text style={styles.itemText}>4 livres</Text>
+            <Text style={styles.itemText}>{mesas}</Text>
+            <Text style={styles.itemText}>2 livre(s)</Text>
         </View>
     </View>
   );
@@ -23,7 +26,6 @@ export default function Metricas() {
 const styles = StyleSheet.create({
     container: {
         backgroundColor:'white',
-        flex:1,
         flexDirection:'row',
         paddingStart: 18,
         paddingEnd: 18,

@@ -9,7 +9,7 @@ export default function Home() {
     <View style={styles.container}>
       <Header name='João Lucas'/>
       <Metricas/>
-      <Text>Hello World</Text>
+      <Text style={styles.title}>Últimos pedidos</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -18,8 +18,15 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f6f6f6',
     
     
   },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginEnd:16,
+    marginStart:16
+  }
 });
