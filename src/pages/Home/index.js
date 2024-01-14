@@ -4,13 +4,13 @@ import { Clock } from '@expo/vector-icons'
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <View style={styles.container}>
-      <Header name='João Lucas' />
-      <Metricas />
+      <Header name='João Lucas' profile={true}/>
+      <Metricas navigateToEquipamnentos={()=>navigation.navigate('Equipamentos')}/>
       <Text style={styles.title}>Últimas atualizações</Text>
-      <View style={styles.news}>
+      {/* <View style={styles.news}>
 
         <View style={styles.bloco}>
           <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
@@ -60,7 +60,7 @@ export default function Home() {
             <Text style={styles.datahora}>11/01/2024</Text>
           </View>
         </View>
-      </View>
+      </View> */}
       <StatusBar style="auto" />
     </View>
   );

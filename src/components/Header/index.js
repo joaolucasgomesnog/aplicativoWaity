@@ -1,47 +1,64 @@
 import React from "react";
-import { View, StyleSheet, Text, StatusBar, TouchableOpacity} from "react-native";
-import {Feather} from '@expo/vector-icons'
+import { View, StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
+import { Ionicons , FontAwesome5} from '@expo/vector-icons';
+import Home from "../../pages/home";
+import Requests from "../../pages/Requests";
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64
 
 
-export default function Header({name}) {
-    return(
-        <View style={styles.container}> 
+export default function Header({ name, profile, back, screenName, navigateToHome}) {
+    return (
+        <View style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.username}>{name}</Text>
-                <TouchableOpacity style={styles.buttonUser}>
-                    <Feather name="user" size={27} color={'white'}/>
-                </TouchableOpacity>
+                {back ? (
+                    <TouchableOpacity style={styles.back} onPress={navigateToHome}>
+                        <Ionicons name="arrow-back-circle-outline" size={27} color="white" style={{paddingEnd:10}}/>
+                    </TouchableOpacity>
+                ) : null}
+                {back ? (
+                    <Text style={styles.screenName}>{screenName}</Text>
+                ) : (
+                    <Text style={styles.screenName}>{name}</Text>
+                )}
+                
+                {profile ? (
+                    <TouchableOpacity style={styles.buttonUser}>
+                        <FontAwesome5 name="user" size={20} color="white" />
+                    </TouchableOpacity>
+                ) : null}
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: 'red',
         paddingTop: statusBarHeight,
         paddingStart: 16,
         paddingEnd: 16,
-        paddingBottom:44
+        paddingBottom: 44,
     },
-    content:{
+    content: {
         flex: 1,
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between",
     },
-    username:{
+    screenName: {
         fontSize: 18,
         color: 'white',
         fontWeight: 'bold',
     },
-    buttonUser:{
-        width:44,
-        height:44,
+    buttonUser: {
+        width: 44,
+        height: 44,
         backgroundColor: 'rgba(255,255,255,0.5)',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '100%',
-    }
+        position:'absolute',
+        right:0
+        
+       
+    },
 })
