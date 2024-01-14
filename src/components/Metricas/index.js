@@ -10,12 +10,12 @@ export default function Metricas({pedidos, garcons, mesas}) {
             <Text style={styles.itemText}>9 pedido(s)</Text>
         </View>
         <View style={styles.item}>
-            <Text style={styles.itemTitle}>Garçons</Text>
+            <Text style={styles.itemTitle}>Eviados</Text>
             <Text style={styles.itemText}>{garcons}</Text>
             <Text style={styles.itemText}>5 online</Text>
         </View>
         <View style={styles.item}>
-            <Text style={styles.itemTitle}>Mesas</Text>
+            <Text style={styles.itemTitle}>Entregues</Text>
             <Text style={styles.itemText}>{mesas}</Text>
             <Text style={styles.itemText}>2 livre(s)</Text>
         </View>
