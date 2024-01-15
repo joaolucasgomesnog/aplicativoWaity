@@ -2,7 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from "../pages/home";
 import Equipamentos from '../pages/Equipamentos';
-import Header from '../components/Header';
+import Solicitacao from '../pages/solicitacao';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +13,7 @@ function Routes() {
       <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Equipamentos" component={Equipamentos}/>
+        <Stack.Screen name="Solicitacao" component={Solicitacao}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
