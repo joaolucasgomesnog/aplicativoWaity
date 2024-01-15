@@ -11,9 +11,9 @@ function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Solicitacao" component={Solicitacao}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Equipamentos" component={Equipamentos}/>
-        <Stack.Screen name="Solicitacao" component={Solicitacao}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
