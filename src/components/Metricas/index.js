@@ -30,6 +30,11 @@ export default function Metricas({ pedidos , navigateToEquipamnentos}) {
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.category} activeOpacity={100}>
+                <Text style={styles.itemTitle}>Cartões</Text>
+                <Text style={styles.itemText}>{pedidos}</Text>
+                <Text style={styles.itemText}>9 pedido(s)</Text>
+            </TouchableOpacity>
         </View>
 
     );
@@ -37,6 +42,7 @@ export default function Metricas({ pedidos , navigateToEquipamnentos}) {
 
 const styles = StyleSheet.create({
     categorys: {
+        fontFamily:'poppins',
         flexDirection: 'column',
         gap: 10,
         marginTop: -24,
@@ -59,7 +65,7 @@ const styles = StyleSheet.create({
     },
     itemTitle: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 500
     },
     itemText: {
         flexDirection: 'row'

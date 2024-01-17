@@ -9,7 +9,6 @@ export default function Home({navigation}) {
     <View style={styles.container}>
       <Header name='João Lucas' profile={true}/>
       <Metricas navigateToEquipamnentos={()=>navigation.navigate('Equipamentos')}/>
-      <Text style={styles.title}>Últimas atualizações</Text>
       {/* <View style={styles.news}>
 
         <View style={styles.bloco}>
@@ -68,6 +67,7 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily:'poppins',
     flex: 1,
     backgroundColor: '#f6f6f6',
 

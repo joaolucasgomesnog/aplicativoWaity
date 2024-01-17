@@ -7,7 +7,7 @@ export default function Equipamentos({navigation}) {
     return (
         <View style={styles.container}>
             <Header profile={false} back={true} screenName='Equipamentos'  navigateToHome={() => navigation.navigate('Home')}/>
-            <TouchableOpacity style={styles.actionButton} onPress={()=>navigation.navigate('Solicitacao')}>
+            <TouchableOpacity style={styles.actionButton} onPress={()=>navigation.navigate('Home')}>
                 <text style={styles.buttonTitle}>Solicitar</text>
             </TouchableOpacity>
 
@@ -71,6 +71,7 @@ export default function Equipamentos({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
+        fontFamily:'poppins',
         flex: 1,
         backgroundColor: '#f6f6f6',
 
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: 'white',
         borderRadius: 10,
-        borderColor: 'red'
+        borderColor: '#821E1B'
     },
     itemTitle: {
         fontSize: 16,
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
 
     },
     actionButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#821E1B',
         paddingHorizontal: 18,
         paddingVertical: 10,
         alignItems: 'center',

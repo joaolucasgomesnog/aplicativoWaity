@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
 import { Ionicons , FontAwesome5} from '@expo/vector-icons';
-import Home from "../../pages/home";
-import Requests from "../../pages/Requests";
+import Home from "../../Screens/home";
+import Requests from "../../Screens/Requests";
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64
 
 
@@ -33,7 +33,8 @@ export default function Header({ name, profile, back, screenName, navigateToHome
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'red',
+        fontFamily:'poppins',
+        backgroundColor: '#821E1B',
         paddingTop: statusBarHeight,
         paddingStart: 16,
         paddingEnd: 16,

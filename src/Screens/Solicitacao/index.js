@@ -75,6 +75,7 @@ export default function Solicitacao({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
+        fontFamily:'poppins',
         flex: 1,
         backgroundColor: '#f6f6f6',
         
