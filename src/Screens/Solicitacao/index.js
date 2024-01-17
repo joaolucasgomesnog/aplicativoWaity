@@ -8,6 +8,7 @@ import {
     View,
     TextInput
 } from 'react-native';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
 export default function Solicitacao({ navigation }) {
@@ -62,10 +63,15 @@ export default function Solicitacao({ navigation }) {
                     }}
                 />
                 <View style={styles.quantityButton}>
-                    <TouchableOpacity>-</TouchableOpacity>
-                    <TextInput placeholder='1'  keyboardType='numeric' style={{width:50, textAlign:'center'}}/>
-                    
-                    <TouchableOpacity>+</TouchableOpacity>
+                    <TouchableOpacity>
+                        <FontAwesome5 name="minus" size={15} color="black" />
+                    </TouchableOpacity>
+
+                    <TextInput placeholder='1' keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} />
+
+                    <TouchableOpacity>
+                        <FontAwesome5 name="plus" size={15} color="black" />
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
         fontFamily:'poppins',
         flex: 1,
         backgroundColor: '#f6f6f6',
-        
+
 
 
     },
@@ -201,17 +207,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
     },
-    quantityButton:{
-        flexDirection:'row',
+    quantityButton: {
+        flexDirection: 'row',
         height: 40,
         borderColor: 'gray',
         borderWidth: 0.5,
         borderRadius: 8,
         paddingHorizontal: 8,
         marginBottom: 10,
-        alignItems:'center',
+        alignItems: 'center',
         justifyContent: 'space-between',
         width: '50%',
-        alignSelf:'center'
+        alignSelf: 'center'
     }
 });

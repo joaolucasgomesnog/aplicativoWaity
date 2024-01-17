@@ -1,8 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
 import { Ionicons , FontAwesome5} from '@expo/vector-icons';
-import Home from "../../Screens/home";
-import Requests from "../../Screens/Requests";
+import Requests from "../../pages/Requests";
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64
 
 
