@@ -3,9 +3,31 @@ import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'reac
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
-
+import React, { useState } from 'react';
+import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import { auth } from '../../Services/FireBaseConfig';
 
 export default function Signup({ navigation }) {
+
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+
+    const handleLogin = () => {
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user)
+                navigation.navigate('Home')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+            });
+    }
     return (
 
 
@@ -19,24 +41,16 @@ export default function Signup({ navigation }) {
             </View>
             <Text style={{ alignSelf: 'flex-start', paddingStart: 30, paddingTop: 30, fontSize: 20, fontWeight: 'bold' }}>Cadastro</Text>
             <View style={{ width: '80%', paddingTop: 20 }}>
-                <Text style={styles.label}>Nome</Text>
-                <View style={{ display: 'flex', borderColor: 'gray', borderBottomWidth: 0.5 }}>
-
-                    <TextInput style={styles.input} placeholder='Insira seu nome' placeholderTextColor={'gray'} />
-
-                    <View style={{ position: 'absolute', left: 0, bottom: 2 }}>
-                        <FontAwesome5 name="user" size={12} color="gray" />
-                    </View>
-                </View>
-            </View>
-            <View style={{ width: '80%'}}>
                 <Text style={styles.label}>Email</Text>
                 <View style={{ display: 'flex', borderColor: 'gray', borderBottomWidth: 0.5 }}>
 
-                    <TextInput style={styles.input} placeholder='Insira seu e-mail' placeholderTextColor={'gray'} />
+                    <TextInput style={styles.input}
+                        placeholder='Insira seu e-mail'
+                        placeholderTextColor={'gray'}
+                        value={email} onChangeText={(val) => { setEmail(val) }} />
 
                     <View style={{ position: 'absolute', left: 0, bottom: 2 }}>
-                        <FontAwesome5 name="envelope" size={12} color="gray" />
+                        <FontAwesome5 name="user" size={12} color="gray" />
                     </View>
                 </View>
             </View>
@@ -44,7 +58,10 @@ export default function Signup({ navigation }) {
                 <Text style={styles.label}>Senha</Text>
                 <View style={{ display: 'flex', borderColor: 'gray', borderBottomWidth: 0.5 }}>
 
-                    <TextInput style={styles.input} placeholder='Insira sua senha' placeholderTextColor={'gray'} />
+                    <TextInput style={styles.input}
+                        placeholder='Insira sua senha'
+                        placeholderTextColor={'gray'}
+                        value={password} onChangeText={(val) => { setPassword(val) }} />
 
                     <View style={{ position: 'absolute', left: 0, bottom: 2 }}>
                         <FontAwesome5 name="key" size={12} color="gray" />
@@ -54,8 +71,8 @@ export default function Signup({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
-                Salvar
+            <TouchableOpacity style={styles.salvarButton} onPress={() => handleLogin()}>
+                <Text style={{color:'white', fontWeight:500}}>Salvar</Text>
             </TouchableOpacity>
             <StatusBar style="auto" />
         </View>
@@ -65,7 +82,7 @@ export default function Signup({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        fontFamily:'poppins',
+        fontFamily: 'poppins',
         flexDirection: 'column',
         gap: 20,
         paddingVertical: 70,
@@ -79,7 +96,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        color: 'Black',
+        color: 'black',
         fontWeight: 'bold',
     },
     input: {
@@ -88,7 +105,7 @@ const styles = StyleSheet.create({
         marginLeft: 14,
 
     },
-    loginButton: {
+    salvarButton: {
         backgroundColor: '#821E1B',
         width: '80%',
         paddingVertical: 7,
@@ -98,7 +115,7 @@ const styles = StyleSheet.create({
         zIndex: 99,
         justifyContent: 'center',
         fontSize: 13,
-        fontWeight: 500,
+        fontWeight: '500',
         fontFamily: 'poppins',
         color: 'white'
     },
@@ -112,11 +129,11 @@ const styles = StyleSheet.create({
         zIndex: 99,
         justifyContent: 'center',
         fontSize: 13,
-        fontWeight: 500,
+        fontWeight: '500',
         fontFamily: 'poppins',
         color: 'white'
     },
     label: {
-        fontWeight: 600
+        fontWeight: '600'
     }
 });

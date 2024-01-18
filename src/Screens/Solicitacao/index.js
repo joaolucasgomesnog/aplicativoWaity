@@ -11,20 +11,32 @@ import {
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
-export default function Solicitacao({ navigation }) {
-    const [text, onChangeText] = React.useState('Useless Text');
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../Services/FireBaseConfig';
 
-    const [countryData, setCountryData] = useState([]);
-    const [stateData, setStateData] = useState([]);
-    const [cityData, setCityData] = useState([]);
-    const [country, setCountry] = useState(null);
-    const [state, setState] = useState(null);
-    const [city, setCity] = useState(null);
-    const [countryName, setCountryName] = useState(null);
-    const [stateName, setStateName] = useState(null);
-    const [cityName, setCityName] = useState(null);
+export default function Solicitacao({ navigation }) {
+    const [item, setItem] = useState()
+    const [itemList, setItemList] = useState([])
+
     const [isFocus, setIsFocus] = useState(false);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                var list = [];
+                const querySnapshot = await getDocs(collection(db, "equipamentos"));
+                querySnapshot.forEach((doc) => {
+                    list.push({ label: doc.get('descricao'), value: doc.get('descricao') });
+                });
+                setItemList(list);
+                console.log(list);
+            } catch (error) {
+                console.error("Erro ao obter dados:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -45,20 +57,18 @@ export default function Solicitacao({ navigation }) {
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={countryData}
+                    data={itemList}
                     search
                     maxHeight={300}
                     labelField="label"
                     valueField="value"
                     placeholder={!isFocus ? 'Selecione um item' : '...'}
                     searchPlaceholder="Search..."
-                    value={country}
+                    value={item}
                     onFocus={() => setIsFocus(true)}
                     onBlur={() => setIsFocus(false)}
-                    onChange={item => {
-                        setCountry(item.value);
-                        handleState(item.value);
-                        setCountryName(item.label);
+                    onChange={itemNew => {
+                        setItem(itemNew);
                         setIsFocus(false);
                     }}
                 />
@@ -81,7 +91,7 @@ export default function Solicitacao({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        fontFamily:'poppins',
+        fontFamily: 'poppins',
         flex: 1,
         backgroundColor: '#f6f6f6',
 
@@ -145,7 +155,7 @@ const styles = StyleSheet.create({
 
     },
     actionButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#821E1B',
         paddingHorizontal: 18,
         paddingVertical: 10,
         alignItems: 'center',
@@ -173,6 +183,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
         marginBottom: 10,
+        color:'black'
     },
     icon: {
         marginRight: 5,

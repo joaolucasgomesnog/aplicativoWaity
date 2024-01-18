@@ -4,7 +4,7 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../Services/FireBaseConfig';
 
 export default function Login({ navigation }) {
@@ -15,12 +15,12 @@ export default function Login({ navigation }) {
 
     const handleLogin = () => {
 
-        createUserWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user)
-                navigation.navigate('Home')
+                navigation.navigate("Home")
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -72,10 +72,10 @@ export default function Login({ navigation }) {
                 </View>
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
-                <Text style={{color:'white', fontWeight:500}}>Entrar</Text>
+                <Text style={{ color: 'white', fontWeight: 500 }}>Entrar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cadastroButton} onPress={() => navigation.navigate('Signup')}>
-                <Text style={{color:'white', fontWeight:500}}>Cadastre-se</Text>
+                <Text style={{ color: 'white', fontWeight: 500 }}>Cadastre-se</Text>
             </TouchableOpacity>
             <StatusBar style="auto" />
         </View>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        color: 'Black',
+        color: 'black',
         fontWeight: 'bold',
     },
     input: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         zIndex: 99,
         justifyContent: 'center',
         fontSize: 13,
-        fontWeight: 500,
+        fontWeight: '500',
         fontFamily: 'poppins',
         color: 'white'
     },
@@ -132,11 +132,11 @@ const styles = StyleSheet.create({
         zIndex: 99,
         justifyContent: 'center',
         fontSize: 13,
-        fontWeight: 500,
+        fontWeight: '500',
         fontFamily: 'poppins',
         color: 'white'
     },
     label: {
-        fontWeight: 600
+        fontWeight: '600'
     }
 });
