@@ -7,7 +7,7 @@ export default function Equipamentos({navigation}) {
     return (
         <View style={styles.container}>
             <Header profile={false} back={true} screenName='Equipamentos'  navigateToHome={() => navigation.navigate('Home')}/>
-            <TouchableOpacity style={styles.actionButton} onPress={()=>navigation.navigate('Solicitacao')}>
+            <TouchableOpacity style={styles.actionButton} onPress={()=>navigation.navigate('Solicitacao', {params:{categoria:'equipametos'}})}>
                 <text style={styles.buttonTitle}>Solicitar</text>
             </TouchableOpacity>
 

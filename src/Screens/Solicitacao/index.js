@@ -13,8 +13,9 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../Services/FireBaseConfig';
+import { useRoute } from '@react-navigation/native';
 
-export default function Solicitacao({ navigation }) {
+export default function Solicitacao({ navigation, route }) {
     const [item, setItem] = useState()
     const [itemList, setItemList] = useState([])
 
@@ -24,7 +25,7 @@ export default function Solicitacao({ navigation }) {
         const fetchData = async () => {
             try {
                 var list = [];
-                const querySnapshot = await getDocs(collection(db, "equipamentos"));
+                const querySnapshot = await getDocs(collection(db, route.params.categoria));
                 querySnapshot.forEach((doc) => {
                     list.push({ label: doc.get('descricao'), value: doc.get('descricao') });
                 });
@@ -36,7 +37,7 @@ export default function Solicitacao({ navigation }) {
         };
     
         fetchData();
-    }, []);
+    }, [route.params.categoria]);
 
     return (
         <View style={styles.container}>
