@@ -15,12 +15,11 @@ function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Equipamentos" component={Equipamentos} />
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Signup' component={Signup} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Solicitacao" component={Solicitacao} />
-
+        <Stack.Screen name="Solicitacao" component={(props) => <Solicitacao {...props} user={user} />} />
+        <Stack.Screen name='Login' component={(props) => <Login {...props} user={user} />} />
+        <Stack.Screen name="Home" component={(props) => <Home {...props} user={user} />} />
+        <Stack.Screen name="Equipamentos" component={(props) => <Equipamentos {...props} user={user} />} />
+        <Stack.Screen name='Signup' component={(props) => <Signup {...props} user={user} />} />
       </Stack.Navigator>
     </NavigationContainer>
   );

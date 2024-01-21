@@ -6,12 +6,12 @@ const app = express();
 
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:3000", // Permite apenas solicitações deste domínio
+    origin: "http://127.0.0.1:19006", // Permite apenas solicitações deste domínio
     methods: "GET,PUT,POST,DELETE", // Métodos permitidos
     optionsSuccessStatus: 204 // Define o status de sucesso para preflight requests para 204
 }))
 
-app.use(cors())
+
 app.use(router)
 
 app.get("/", (req, res) => {

@@ -5,13 +5,15 @@ const prisma = new PrismaClient()
 export default{
 
     async createSolicitacao(req, res) {
-        const { cidade, usuario, observacao } = req.body;
+        const { cidadeId, usuarioId, observacao, quantidade, itemId} = req.body;
 
         try {
             const solicitacao = await prisma.solicitacao.create({
                 data: {
-                    cidade: cidade,
-                    usuario: usuario,
+                    itemId: itemId,
+                    quantidade: quantidade,
+                    cidadeId: cidadeId,
+                    usuarioId: usuarioId,
                     observacao: observacao
                 }
             });

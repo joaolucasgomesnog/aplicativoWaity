@@ -44,6 +44,18 @@ export default{
         }
     },
 
+    async findItemByCategoria(req, res) {
+        try {
+            const { categoria } = req.params
+            const item = await prisma.item.findMany({ where: { categoriaId: Number(categoria) }})
+            if (!item) return res.json({ error: "item não existe" })
+            return res.json(item)
+
+        } catch (error) {
+            return res.json({ error })
+        }
+    },
+
 
     async updateItem(req, res) {
         try {

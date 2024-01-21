@@ -2,6 +2,7 @@ import { Router } from "express";
 import ItemController from "../controllers/ItemController";
 import SolicitacaoController from "../controllers/SolicitacaoController";
 import UsuarioController from "../controllers/UsuarioController";
+import CidadeController from "../controllers/CidadeController";
 
 const router = Router()
 
@@ -14,9 +15,15 @@ router.delete("/usuario/:id", UsuarioController.deleteUsuarioById)
 router.post("/item",ItemController.createItem)
 router.get("/items",ItemController.findAllItems)
 router.get("/item/:id",ItemController.findItemById)
+router.get("/items/:categoria",ItemController.findItemByCategoria)
 router.put("/item/:id",ItemController.updateItem)
 router.delete("/item/:id",ItemController.deleteItemById)
 
+router.post("/cidade", CidadeController.createCidade)
+router.get("/cidades", CidadeController.findAllCidades)
+router.get("/cidade/:id", CidadeController.findCidadeById)
+router.put("/cidade/:id", CidadeController.updateCidade)
+router.delete("/cidade/:id", CidadeController.deleteCidadeById)
 
 
 router.post("/solicitacao",SolicitacaoController.createSolicitacao)

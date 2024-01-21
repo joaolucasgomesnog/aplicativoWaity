@@ -36,11 +36,12 @@ model Categoria {
 }
 
 model Item {
-  id          Int       @id @default(autoincrement())
-  descricao   String    @unique
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  disponivel  Boolean   @default(true)
+  id          Int           @id @default(autoincrement())
+  descricao   String        @unique
+  categoria   Categoria     @relation(fields: [categoriaId], references: [id])
+  disponivel  Boolean       @default(true)
   categoriaId Int
+  Solicitacao Solicitacao[]
 }
 
 model Solicitacao {
@@ -48,9 +49,12 @@ model Solicitacao {
   dataCriacao DateTime @default(now())
   cidade      Cidade   @relation(fields: [cidadeId], references: [id])
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
-  status      Status?   @relation(fields: [statusId], references: [id])
+  status      Status?  @relation(fields: [statusId], references: [id])
+  item        Item     @relation(fields: [itemId], references: [id])
+  quantidade  Int
   observacao  String?
   cidadeId    Int
   usuarioId   Int
-  statusId    Int @default(1)
+  statusId    Int      @default(1)
+  itemId      Int
 }

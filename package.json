@@ -35,5 +35,10 @@
     "@babel/core": "^7.20.0",
     "nodemon": "^3.0.3"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "web": {
+      "proxy": "http://localhost:3030"
+    }
+  }
 }

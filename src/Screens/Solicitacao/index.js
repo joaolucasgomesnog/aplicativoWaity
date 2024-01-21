@@ -11,38 +11,79 @@ import {
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../../Services/FireBaseConfig';
-import { useRoute } from '@react-navigation/native';
+
 
 export default function Solicitacao({ navigation, route }) {
     const [item, setItem] = useState()
+    const [cidade, setCidade] = useState()
     const [itemList, setItemList] = useState([])
-
+    const [cidadeList, setCidadeList] = useState([])
+    const [quantidade, setQuantidade] = useState(1)
+    const [observacao, setObservacao] = useState()
     const [isFocus, setIsFocus] = useState(false);
 
+    const [solicitacao, setSolicitacao] = useState({
+        item: item,
+        cidade: cidade,
+        quantidade: quantidade,
+        observacao: observacao
+
+    })
+    const getiItems = () => {
+
+        fetch("http://localhost:3030/items/1")
+            .then(res => res.json())
+            .then(dados => {
+                console.log('dados')
+                console.log(dados)
+                setItemList(dados)
+
+            })
+    }
+
+    const getiCidades = () => {
+
+        fetch("http://localhost:3030/cidades")
+            .then(res => res.json())
+            .then(dados => {
+                console.log('dados')
+                console.log(dados)
+                setCidadeList(dados)
+
+            })
+    }
+
+    const lancarSolicitacao = (solicitacaoData) => {
+        fetch(`http://localhost:3030/solicitacao`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(solicitacaoData)
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log('Solicitação lançada') //depois vou colocar um get clientes aqui quando o metodo estiver pronto
+
+                }
+
+            })
+    }
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                var list = [];
-                const querySnapshot = await getDocs(collection(db, route.params.categoria));
-                querySnapshot.forEach((doc) => {
-                    list.push({ label: doc.get('descricao'), value: doc.get('descricao') });
-                });
-                setItemList(list);
-                console.log(list);
-            } catch (error) {
-                console.error("Erro ao obter dados:", error);
-            }
-        };
-    
-        fetchData();
-    }, [route.params.categoria]);
+        getiItems()
+        getiCidades()
+
+    }, [])
 
     return (
         <View style={styles.container}>
             <Header profile={false} back={true} screenName='Solicitação' navigateToHome={() => navigation.navigate('Home')} />
-            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity style={styles.actionButton} onPress={() => lancarSolicitacao({
+                itemId: item,
+                cidadeId: cidade,
+                quantidade: quantidade,
+                observacao: observacao,
+                usuarioId: 1
+            })}>
                 <text style={styles.buttonTitle}>Enviar</text>
             </TouchableOpacity>
 
@@ -58,7 +99,7 @@ export default function Solicitacao({ navigation, route }) {
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={itemList}
+                    data={itemList.map(item => ({ label: item.descricao, value: item.id }))}
                     search
                     maxHeight={300}
                     labelField="label"
@@ -69,21 +110,48 @@ export default function Solicitacao({ navigation, route }) {
                     onFocus={() => setIsFocus(true)}
                     onBlur={() => setIsFocus(false)}
                     onChange={itemNew => {
-                        setItem(itemNew);
+                        setItem(itemNew.value);
                         setIsFocus(false);
                     }}
                 />
+                <Text>Unidade de destino</Text>
+                <Dropdown
+
+                    style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={cidadeList.map(item => ({ label: item.descricao, value: item.id }))}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isFocus ? 'Selecione uma unidade' : '...'}
+                    searchPlaceholder="Search..."
+                    value={cidade}
+                    onFocus={() => setIsFocus(true)}
+                    onBlur={() => setIsFocus(false)}
+                    onChange={cidadeNew => {
+                        setCidade(cidadeNew.value);
+                        setIsFocus(false);
+                    }}
+                />
+                <Text>Quantidade</Text>
                 <View style={styles.quantityButton}>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="minus" size={15} color="black" />
+                    <TouchableOpacity onPress={() => { quantidade > 1 ? setQuantidade(quantidade - 1) : console.log(quantidade) }}>
+                        <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
                     </TouchableOpacity>
 
-                    <TextInput placeholder='1' keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} />
+                    <TextInput placeholder='1' value={quantidade} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
                         <FontAwesome5 name="plus" size={15} color="black" />
                     </TouchableOpacity>
                 </View>
+
+                <Text>Observação</Text>
+                <TextInput style={styles.textArea} multiline={true} value={observacao} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
             </View>
 
         </View>
@@ -138,7 +206,7 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: 'white',
         borderRadius: 10,
-        borderColor: 'red'
+        borderColor: 'gray'
     },
     itemTitle: {
         fontSize: 16,
@@ -175,6 +243,7 @@ const styles = StyleSheet.create({
         height: 40,
         margin: 12,
         borderWidth: 1,
+        borderColor: 'gray',
         padding: 10,
     },
     dropdown: {
@@ -184,7 +253,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
         marginBottom: 10,
-        color:'black'
+        color: 'black'
     },
     icon: {
         marginRight: 5,
@@ -200,6 +269,7 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 14,
+        color: 'gray'
     },
     selectedTextStyle: {
         fontSize: 14,
@@ -230,6 +300,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '50%',
-        alignSelf: 'center'
+
+    },
+    textArea: {
+        flexDirection: 'row',
+        height: 150,
+        width: '100%',
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        paddingVertical: 8,
+
+
     }
 });
