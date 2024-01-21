@@ -11,9 +11,10 @@ import {
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
 
-export default function Solicitacao({ navigation, route }) {
+export default function Solicitacao({ navigation, route}) {
     const [item, setItem] = useState()
     const [cidade, setCidade] = useState()
     const [itemList, setItemList] = useState([])
@@ -21,17 +22,11 @@ export default function Solicitacao({ navigation, route }) {
     const [quantidade, setQuantidade] = useState(1)
     const [observacao, setObservacao] = useState()
     const [isFocus, setIsFocus] = useState(false);
+    const [loading, setLoading] = useState(true)
 
-    const [solicitacao, setSolicitacao] = useState({
-        item: item,
-        cidade: cidade,
-        quantidade: quantidade,
-        observacao: observacao
-
-    })
     const getiItems = () => {
-
-        fetch("http://localhost:3030/items/1")
+        console.log(route.params.categoria)
+        fetch(`http://localhost:3030/items/${route.params.categoria}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -71,11 +66,13 @@ export default function Solicitacao({ navigation, route }) {
     useEffect(() => {
         getiItems()
         getiCidades()
+        setLoading(false)
 
     }, [])
 
     return (
         <View style={styles.container}>
+            <Loading loading={loading}/>
             <Header profile={false} back={true} screenName='Solicitação' navigateToHome={() => navigation.navigate('Home')} />
             <TouchableOpacity style={styles.actionButton} onPress={() => lancarSolicitacao({
                 itemId: item,

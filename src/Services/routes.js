@@ -27,8 +27,9 @@ router.delete("/cidade/:id", CidadeController.deleteCidadeById)
 
 
 router.post("/solicitacao",SolicitacaoController.createSolicitacao)
-router.get("/solicitacao",SolicitacaoController.findAllSolicitacoes)
+router.get("/solicitacoes",SolicitacaoController.findAllSolicitacoes)
 router.get("/solicitacao/:id",SolicitacaoController.findSolicitacaoById)
+router.get("/solicitacoes/categoria/:categoria/usuario/:emailUsuario", SolicitacaoController.findSolicitacoesCategoria)
 // router.put("/solicitacao/:id",SolicitacaoController.updateSolicitacao)
 router.delete("/solicitacao/:id",SolicitacaoController.deleteSolicitacaoById)
 

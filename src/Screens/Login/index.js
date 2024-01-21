@@ -6,15 +6,16 @@ import Metricas from '../../components/Metricas';
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../Services/FireBaseConfig';
+import Loading from '../../components/Loading';
 
 export default function Login({ navigation }) {
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = () => {
-
+        setLoading(true)
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -27,11 +28,13 @@ export default function Login({ navigation }) {
                 const errorMessage = error.message;
                 console.log(errorMessage)
             });
+            setLoading(false)
     }
     return (
 
 
         <View style={styles.container}>
+            <Loading loading={loading}/>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image style={styles.logo} source={require('../../shared/logo.png')} resizeMode='contain' resizeMethod='resize' />
                 <View style={{ flexDirection: 'column', paddingStart: 10 }}>
