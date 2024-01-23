@@ -14,9 +14,9 @@ export default function Header({ name, profile, back, screenName, navigateToHome
                     </TouchableOpacity>
                 ) : null}
                 {back ? (
-                    <Text style={styles.screenName}>{screenName}</Text>
+                    <Text style={styles.screenName}>`{screenName}`</Text>
                 ) : (
-                    <Text style={styles.screenName}>{name}</Text>
+                    <Text style={styles.screenName}>`{name}`</Text>
                 )}
                 
                 {profile ? (
@@ -31,7 +31,7 @@ export default function Header({ name, profile, back, screenName, navigateToHome
 
 const styles = StyleSheet.create({
     container: {
-        fontFamily:'poppins',
+        fontFamily:'Poppins',
         backgroundColor: '#821E1B',
         paddingTop: statusBarHeight,
         paddingStart: 16,
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     screenName: {
         fontSize: 18,
         color: 'white',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
+
     },
     buttonUser: {
         width: 44,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.5)',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: '100%',
+        borderRadius: 100,
         position:'absolute',
         right:0
         

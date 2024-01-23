@@ -3,63 +3,20 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Clock } from '@expo/vector-icons'
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
+import { setCustomText } from 'react-native-global-props';
 
 export default function Home({navigation}) {
+
+  const customTextProps = { 
+    style: { 
+      fontFamily: 'Poppins'
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Header name='João Lucas' profile={true}/>
       <Metricas navigateToEquipamnentos={()=>navigation.navigate('Equipamentos')}/>
-      {/* <View style={styles.news}>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-
-        <View style={styles.bloco}>
-          <Text style={styles.subtitle}>Marlon está a caminho com seu pedido</Text>
-          <View style={styles.datahora}>
-            <Text style={styles.datahora}>11/01/2024</Text>
-          </View>
-        </View>
-      </View> */}
       <StatusBar style="auto" />
     </View>
   );
@@ -96,7 +53,7 @@ const styles = StyleSheet.create({
   },
   datahora: {
     fontSize: 10,
-    fontWeight:700,
+    fontWeight:'700',
     color: 'gray',
     flex: 1,
     justifyContent: 'flex-end',

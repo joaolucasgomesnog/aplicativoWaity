@@ -25,8 +25,7 @@ export default function Solicitacao({ navigation, route}) {
     const [loading, setLoading] = useState(true)
 
     const getiItems = () => {
-        console.log(route.params.categoria)
-        fetch(`http://localhost:3030/items/${route.params.categoria}`)
+        fetch(`https://54b1-186-211-230-19.ngrok-free.app/items/1`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -38,7 +37,7 @@ export default function Solicitacao({ navigation, route}) {
 
     const getiCidades = () => {
 
-        fetch("http://localhost:3030/cidades")
+        fetch("https://54b1-186-211-230-19.ngrok-free.app/cidades")
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -49,7 +48,7 @@ export default function Solicitacao({ navigation, route}) {
     }
 
     const lancarSolicitacao = (solicitacaoData) => {
-        fetch(`http://localhost:3030/solicitacao`, {
+        fetch(`https://54b1-186-211-230-19.ngrok-free.app/solicitacao`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
@@ -64,6 +63,7 @@ export default function Solicitacao({ navigation, route}) {
     }
 
     useEffect(() => {
+        
         getiItems()
         getiCidades()
         setLoading(false)
@@ -81,7 +81,7 @@ export default function Solicitacao({ navigation, route}) {
                 observacao: observacao,
                 usuarioId: 1
             })}>
-                <text style={styles.buttonTitle}>Enviar</text>
+                <Text style={styles.buttonTitle}>Enviar</Text>
             </TouchableOpacity>
 
             <StatusBar style="auto" />
@@ -140,7 +140,7 @@ export default function Solicitacao({ navigation, route}) {
                         <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
                     </TouchableOpacity>
 
-                    <TextInput placeholder='1' value={quantidade} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
+                    <TextInput placeholder='1' value={String(quantidade)} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
 
                     <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
                         <FontAwesome5 name="plus" size={15} color="black" />
@@ -157,7 +157,7 @@ export default function Solicitacao({ navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        fontFamily: 'poppins',
+        fontFamily: 'Poppins',
         flex: 1,
         backgroundColor: '#f6f6f6',
 
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     buttonTitle: {
         fontSize: 16,
         fontWeight: 'bold',
+        color:'white'
     },
     news: {
         gap: 20
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontSize: 18,
         fontWeight: 'bold',
-        fontFamily: 'poppins',
+        fontFamily: 'Poppins',
         color: 'white'
     },
     input: {
@@ -300,7 +301,6 @@ const styles = StyleSheet.create({
 
     },
     textArea: {
-        flexDirection: 'row',
         height: 150,
         width: '100%',
         borderColor: 'gray',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
         paddingVertical: 8,
-
+        textAlignVertical:'top'
 
     }
 });

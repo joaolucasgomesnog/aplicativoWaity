@@ -7,10 +7,10 @@ import Loading from '../../components/Loading';
 
 export default function Equipamentos({ navigation }) {
     const [solicitacoes, setSolicitacoes] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const getSolicitacoes = () => {
 
-        fetch("http://localhost:3030/solicitacoes/categoria/1/usuario/lucasgomes145987@gmail.com")
+        fetch("https://54b1-186-211-230-19.ngrok-free.app/solicitacoes/categoria/1/usuario/lucasgomes145987@gmail.com")
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -46,7 +46,7 @@ export default function Equipamentos({ navigation }) {
         <View style={styles.container}>
             <Header profile={false} back={true} screenName='Equipamentos' navigateToHome={() => navigation.navigate('Home')} />
             <Loading loading={loading}/>
-            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Solicitacao', { params: { categoria: 1 } })}>
+            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Solicitacao')}>
                 <Text style={styles.buttonTitle}>Solicitar</Text>
             </TouchableOpacity>
 
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         fontSize: 10,
-        fontWeight: 700,
+        fontWeight: '700',
         color: 'gray',
         flex: 1,
         justifyContent: 'space-evenly',
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
     },
     datahora: {
         fontSize: 10,
-        fontWeight: 700,
+        fontWeight: '700',
         color: 'gray',
         position: 'absolute',
         right: 0
     },
     status: {
         fontSize: 10,
-        fontWeight: 700,
+        fontWeight: '700',
         color: 'gray',
         position: 'absolute',
         left: 0

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     itemTitle: {
         fontSize: 16,
-        fontWeight: 500
+        fontWeight: '500'
     },
     itemText: {
         flexDirection: 'row'
