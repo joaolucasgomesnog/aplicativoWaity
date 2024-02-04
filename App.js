@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Routes from "./src/routes/routes";
 import { useFonts } from 'expo-font';
 
@@ -6,8 +6,8 @@ import { useFonts } from 'expo-font';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    'Poppins': require('./assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'poppins': require('./assets/fonts/Poppins-Regular.ttf'),
+    'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
   }
   );
 

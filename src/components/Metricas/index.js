@@ -2,35 +2,35 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 
-export default function Metricas({ pedidos , navigateToEquipamnentos}) {
+export default function Metricas({ pedidos , navigateTo}) {
     return (
         <View style={styles.categorys}>
-            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateToEquipamnentos}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Equipamentos</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} activeOpacity={100}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Almoxarifado</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} activeOpacity={100}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Material de venda</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} activeOpacity={100}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Relatórios</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} activeOpacity={100}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Brindes</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} activeOpacity={100}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={navigateTo}>
                 <Text style={styles.itemTitle}>Cartões</Text>
                 <Text style={styles.itemText}>{pedidos}</Text>
                 <Text style={styles.itemText}>9 pedido(s)</Text>

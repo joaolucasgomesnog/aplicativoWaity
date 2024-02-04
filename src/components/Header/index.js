@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 import { View, StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
-import { Ionicons , FontAwesome5} from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64
 
 
-export default function Header({ name, profile, back, screenName, navigateToHome}) {
+export default function Header({ name, profile, back, screenName, navigateTo }) {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
                 {back ? (
-                    <TouchableOpacity style={styles.back} onPress={navigateToHome}>
-                        <Ionicons name="arrow-back-circle-outline" size={27} color="white" style={{paddingEnd:10}}/>
-                    </TouchableOpacity>
+                    <>
+                        <TouchableOpacity style={styles.back} onPress={navigateTo}>
+                            <Ionicons name="arrow-back-circle-outline" size={27} color="white" style={{ paddingEnd: 10 }} />
+                        </TouchableOpacity>
+                        <Text style={styles.screenName}>{screenName}</Text>
+                    </>
                 ) : null}
-                {back ? (
-                    <Text style={styles.screenName}>`{screenName}`</Text>
-                ) : (
-                    <Text style={styles.screenName}>`{name}`</Text>
-                )}
-                
                 {profile ? (
-                    <TouchableOpacity style={styles.buttonUser}>
-                        <FontAwesome5 name="user" size={20} color="white" />
-                    </TouchableOpacity>
+                    <>
+                        <Text style={styles.screenName}>{name}</Text>
+                        <TouchableOpacity style={styles.buttonUser}>
+                            <FontAwesome5 name="user" size={20} color="white" />
+                        </TouchableOpacity>
+                    </>
                 ) : null}
             </View>
         </View>
@@ -31,7 +31,7 @@ export default function Header({ name, profile, back, screenName, navigateToHome
 
 const styles = StyleSheet.create({
     container: {
-        fontFamily:'Poppins',
+        fontFamily: 'poppins',
         backgroundColor: '#821E1B',
         paddingTop: statusBarHeight,
         paddingStart: 16,
@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         paddingBottom: 44,
     },
     content: {
-        flex: 1,
-        alignItems: "center",
         flexDirection: "row",
     },
     screenName: {
@@ -56,9 +54,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 100,
-        position:'absolute',
-        right:0
-        
-       
+        position: 'absolute',
+        right: 0
+
+
     },
 })

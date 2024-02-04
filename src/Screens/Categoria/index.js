@@ -1,16 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Pressable } from 'react-native';
 import Header from '../../components/Header';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 
 
-export default function Equipamentos({ navigation }) {
+export default function Categoria({ navigation, route }) {
+    const { categoria, screenName } = route.params
     const [solicitacoes, setSolicitacoes] = useState([])
     const [loading, setLoading] = useState(false)
+
+
+
     const getSolicitacoes = () => {
 
-        fetch("https://7614-186-211-230-19.ngrok-free.app/solicitacoes/categoria/1/usuario/lucasgomes145987@gmail.com")
+        fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/lucasgomes145987@gmail.com`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -25,8 +29,11 @@ export default function Equipamentos({ navigation }) {
         const data = new Date(dataUTC);
 
         // Obter componentes da data (dia, mês e ano)
-        const dia = data.getUTCDate();
+        let dia = data.getUTCDate();
         let mes = data.getUTCMonth() + 1; // Os meses começam do zero, então adicionamos 1
+        if (dia < 10) {
+            dia = `0${dia}`
+        }
         if (mes < 10) {
             mes = `0${mes}`
         }
@@ -44,29 +51,35 @@ export default function Equipamentos({ navigation }) {
     }, [])
     return (
         <View style={styles.container}>
-            <Header profile={false} back={true} screenName='Equipamentos' navigateToHome={() => navigation.navigate('Home')} />
-            <Loading loading={loading}/>
-            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Solicitacao')}>
+            <Header profile={false} back={true} screenName={screenName} navigateTo={() => navigation.navigate('Home')} />
+            <Loading loading={loading} />
+            <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Solicitacao', { tipo: `${categoria}`, screenName:screenName})}>
                 <Text style={styles.buttonTitle}>Solicitar</Text>
             </TouchableOpacity>
-
             <StatusBar style="auto" />
             <Text style={styles.title}>Últimas solicitações</Text>
             <View style={styles.news}>
                 {
-                    solicitacoes.map((solicitacao) =>
-                        <View style={styles.bloco}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={styles.subtitle}>{solicitacao.quantidade}x </Text>
-                                <Text style={styles.subtitle}>{solicitacao.item.descricao}</Text>
-                                <Text style={styles.subtitle}> para {solicitacao.cidade.descricao}</Text>
-                            </View>
-                            <View style={styles.informacao}>
-                                <Text style={styles.status}>{solicitacao.status.descricao}</Text>
-                                <Text style={styles.datahora}>{formatarData(solicitacao.dataCriacao)}</Text>
-                            </View>
-                        </View>
+                    Array.isArray(solicitacoes)? (
 
+                        solicitacoes.map((solicitacao, index) => (
+                            <Pressable style={styles.bloco} key={index} onPress={() => navigation.navigate('Solicitacao')}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.subtitle}>{solicitacao.quantidade}x </Text>
+                                    <Text style={styles.subtitle}>{solicitacao.item.descricao}</Text>
+                                    <Text style={styles.subtitle}> para {solicitacao.cidade.descricao}</Text>
+                                </View>
+                                <View style={styles.informacao}>
+                                    <Text style={styles.status}>{solicitacao.status.descricao}</Text>
+                                    <Text style={styles.datahora}>{formatarData(solicitacao.dataCriacao)}</Text>
+                                </View>
+                            </Pressable>
+                        )
+                        )
+                    ) : (
+                        <View style={styles.bloco}>
+                            <Text style={styles.subtitle}>Nenhuma solicitação por enquanto</Text>
+                        </View>
                     )
                 }
             </View>

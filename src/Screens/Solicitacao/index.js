@@ -14,7 +14,9 @@ import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 
 
+
 export default function Solicitacao({ navigation, route}) {
+    const {tipo, screenName} = route.params
     const [item, setItem] = useState()
     const [cidade, setCidade] = useState()
     const [itemList, setItemList] = useState([])
@@ -25,7 +27,7 @@ export default function Solicitacao({ navigation, route}) {
     const [loading, setLoading] = useState(true)
 
     const getiItems = () => {
-        fetch(`https://54b1-186-211-230-19.ngrok-free.app/items/1`)
+        fetch(`https://7614-186-211-230-19.ngrok-free.app/items/${tipo}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -37,7 +39,7 @@ export default function Solicitacao({ navigation, route}) {
 
     const getiCidades = () => {
 
-        fetch("https://54b1-186-211-230-19.ngrok-free.app/cidades")
+        fetch("https://7614-186-211-230-19.ngrok-free.app/cidades")
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -48,7 +50,7 @@ export default function Solicitacao({ navigation, route}) {
     }
 
     const lancarSolicitacao = (solicitacaoData) => {
-        fetch(`https://54b1-186-211-230-19.ngrok-free.app/solicitacao`, {
+        fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacao`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
@@ -56,8 +58,9 @@ export default function Solicitacao({ navigation, route}) {
             .then(res => {
                 if (res.ok) {
                     console.log('Solicitação lançada') //depois vou colocar um get clientes aqui quando o metodo estiver pronto
-
+                    navigation.navigate('Categoria',{categoria:tipo})
                 }
+                
 
             })
     }
@@ -73,7 +76,7 @@ export default function Solicitacao({ navigation, route}) {
     return (
         <View style={styles.container}>
             <Loading loading={loading}/>
-            <Header profile={false} back={true} screenName='Solicitação' navigateToHome={() => navigation.navigate('Home')} />
+            <Header profile={false} back={true} screenName='Solicitação' navigateTo={() => navigation.navigate('Categoria', {categoria:tipo, screenName:screenName})} />
             <TouchableOpacity style={styles.actionButton} onPress={() => lancarSolicitacao({
                 itemId: item,
                 cidadeId: cidade,

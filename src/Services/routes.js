@@ -3,6 +3,7 @@ import ItemController from "../controllers/ItemController";
 import SolicitacaoController from "../controllers/SolicitacaoController";
 import UsuarioController from "../controllers/UsuarioController";
 import CidadeController from "../controllers/CidadeController";
+import CategoriaController from "../controllers/CategoriaController";
 
 const router = Router()
 
@@ -33,6 +34,10 @@ router.get("/solicitacoes/categoria/:categoria/usuario/:emailUsuario", Solicitac
 // router.put("/solicitacao/:id",SolicitacaoController.updateSolicitacao)
 router.delete("/solicitacao/:id",SolicitacaoController.deleteSolicitacaoById)
 
-
+router.post("/categoria", CategoriaController.createCategoria)
+router.get("/categorias", CategoriaController.findAllCategorias)
+router.get("/categoria/:id", CategoriaController.findCategoriaById)
+router.put("/categoria/:id", CategoriaController.updateCategoria)
+router.delete("/categoria/:id", CategoriaController.deleteCategoriaById)
 
 export {router}
