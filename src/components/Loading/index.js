@@ -13,12 +13,12 @@ const Loading = ({ loading }) => (
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        alignItems:'center',
+        justifyContent:'center',
         backgroundColor: 'white',
         height: '100%',
         width: '100%',
-        zIndex: 99,
+        zIndex: 100,
         position: 'absolute'
     },
 });

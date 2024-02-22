@@ -15,16 +15,18 @@ import Loading from '../../components/Loading';
 
 
 
-export default function Solicitacao({ navigation, route}) {
-    const {tipo, screenName} = route.params
+export default function Solicitacao({ navigation, route }) {
+    const { tipo, screenName, solicitacaoId } = route.params
     const [item, setItem] = useState()
     const [cidade, setCidade] = useState()
     const [itemList, setItemList] = useState([])
     const [cidadeList, setCidadeList] = useState([])
     const [quantidade, setQuantidade] = useState(1)
     const [observacao, setObservacao] = useState()
-    const [isFocus, setIsFocus] = useState(false);
-    const [loading, setLoading] = useState(true)
+    const [status, setStatus] = useState()
+    const [statusList, setStatusList] = useState([])
+    const [isFocus, setIsFocus] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const getiItems = () => {
         fetch(`https://7614-186-211-230-19.ngrok-free.app/items/${tipo}`)
@@ -33,6 +35,17 @@ export default function Solicitacao({ navigation, route}) {
                 console.log('dados')
                 console.log(dados)
                 setItemList(dados)
+
+            })
+    }
+
+    const getStatusList = () => {
+        fetch(`https://7614-186-211-230-19.ngrok-free.app/status`)
+            .then(res => res.json())
+            .then(dados => {
+                console.log('dados')
+                console.log(dados)
+                setStatusList(dados)
 
             })
     }
@@ -49,6 +62,22 @@ export default function Solicitacao({ navigation, route}) {
             })
     }
 
+    const getSolicitacao = () => {
+        if (solicitacaoId != null && solicitacaoId != undefined) {
+            fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`)
+                .then(res => res.json())
+                .then(dados => {
+                    console.log(dados)
+                    setItem(dados.itemId)
+                    setCidade(dados.cidadeId)
+                    setQuantidade(parseInt(dados.quantidade))
+                    setObservacao(dados.observacao)
+                    setStatus(dados.statusId)
+                })
+        }
+    }
+
+
     const lancarSolicitacao = (solicitacaoData) => {
         fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacao`, {
             method: 'POST',
@@ -58,32 +87,61 @@ export default function Solicitacao({ navigation, route}) {
             .then(res => {
                 if (res.ok) {
                     console.log('Solicitação lançada') //depois vou colocar um get clientes aqui quando o metodo estiver pronto
-                    navigation.navigate('Categoria',{categoria:tipo})
+                    navigation.navigate('Categoria', { categoria: tipo, screenName: screenName })
                 }
-                
+
 
             })
     }
+    const atualizarSolicitacao = (solicitacaoData) => {
+        fetch(`https://a9ad-186-211-180-2.ngrok-free.app/solicitacao/${solicitacaoId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(solicitacaoData)
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log('Solicitação lançada') //depois vou colocar um get clientes aqui quando o metodo estiver pronto
+                    navigation.navigate('Categoria', { categoria: tipo, screenName: screenName })
+                }
 
+
+            })
+    }
+    const handleSolicitacao = () => {
+        if (solicitacaoId != null && solicitacaoId != undefined) {
+            atualizarSolicitacao({
+                status: status
+            })
+        } else {
+            lancarSolicitacao({
+                itemId: item,
+                cidadeId: cidade,
+                quantidade: quantidade,
+                observacao: observacao,
+                usuarioId: 1
+            })
+
+        }
+    }
     useEffect(() => {
-        
+        setLoading(true)
         getiItems()
         getiCidades()
+        if (solicitacaoId != null && solicitacaoId != undefined) {
+            getStatusList()
+            getSolicitacao()
+        }
+
         setLoading(false)
 
     }, [])
 
     return (
         <View style={styles.container}>
-            <Loading loading={loading}/>
-            <Header profile={false} back={true} screenName='Solicitação' navigateTo={() => navigation.navigate('Categoria', {categoria:tipo, screenName:screenName})} />
-            <TouchableOpacity style={styles.actionButton} onPress={() => lancarSolicitacao({
-                itemId: item,
-                cidadeId: cidade,
-                quantidade: quantidade,
-                observacao: observacao,
-                usuarioId: 1
-            })}>
+            <Header profile={false} back={true} screenName='Solicitação' navigateTo={() => navigation.navigate('Categoria', { categoria: tipo, screenName: screenName })} />
+            <Loading loading={loading} />
+            <TouchableOpacity style={styles.actionButton} onPress={() => handleSolicitacao()}>
                 <Text style={styles.buttonTitle}>Enviar</Text>
             </TouchableOpacity>
 
@@ -152,6 +210,35 @@ export default function Solicitacao({ navigation, route}) {
 
                 <Text>Observação</Text>
                 <TextInput style={styles.textArea} multiline={true} value={observacao} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
+                {
+                    solicitacaoId != null && solicitacaoId != undefined ? (
+                        <>
+                            <Text style={{marginTop:10}}>Status</Text>
+                            <Dropdown
+
+                                style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                data={statusList.map(item => ({ label: item.descricao, value: item.id }))}
+                                search
+                                maxHeight={300}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!isFocus ? 'Marque um status' : '...'}
+                                searchPlaceholder="Search..."
+                                value={status}
+                                onFocus={() => setIsFocus(true)}
+                                onBlur={() => setIsFocus(false)}
+                                onChange={statusNew => {
+                                    setStatus(parseInt(statusNew.value));
+                                    setIsFocus(false);
+                                }}
+                            />
+                        </>
+                    ) : null
+                }
             </View>
 
         </View>
@@ -178,7 +265,7 @@ const styles = StyleSheet.create({
     buttonTitle: {
         fontSize: 16,
         fontWeight: 'bold',
-        color:'white'
+        color: 'white'
     },
     news: {
         gap: 20
@@ -311,7 +398,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 8,
         paddingVertical: 8,
-        textAlignVertical:'top'
+        textAlignVertical: 'top'
 
     }
 });

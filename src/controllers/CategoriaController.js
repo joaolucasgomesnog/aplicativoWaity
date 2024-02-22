@@ -44,8 +44,6 @@ export default{
     },
 
 
-
-
     async updateCategoria(req, res) {
         try {
             const { id } = req.params
@@ -82,4 +80,5 @@ export default{
             return res.json({ error })
         }
     },
+    
 }

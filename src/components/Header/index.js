@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
 
     },
     buttonUser: {
-        width: 44,
-        height: 44,
+        width: 35,
+        height: 35,
         backgroundColor: 'rgba(255,255,255,0.5)',
         alignItems: 'center',
         justifyContent: 'center',

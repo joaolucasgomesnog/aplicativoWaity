@@ -4,6 +4,7 @@ import SolicitacaoController from "../controllers/SolicitacaoController";
 import UsuarioController from "../controllers/UsuarioController";
 import CidadeController from "../controllers/CidadeController";
 import CategoriaController from "../controllers/CategoriaController";
+import StatusController from "../controllers/StatusController";
 
 const router = Router()
 
@@ -31,7 +32,8 @@ router.post("/solicitacao",SolicitacaoController.createSolicitacao)
 router.get("/solicitacoes",SolicitacaoController.findAllSolicitacoes)
 router.get("/solicitacao/:id",SolicitacaoController.findSolicitacaoById)
 router.get("/solicitacoes/categoria/:categoria/usuario/:emailUsuario", SolicitacaoController.findSolicitacoesCategoria)
-// router.put("/solicitacao/:id",SolicitacaoController.updateSolicitacao)
+router.get("/solicitacoes/categoria/:categoria/usuario/:emailUsuario/status/:status", SolicitacaoController.countSolicitacoesByStatus)
+router.put("/solicitacao/:id",SolicitacaoController.updateSolicitacaoStatus)
 router.delete("/solicitacao/:id",SolicitacaoController.deleteSolicitacaoById)
 
 router.post("/categoria", CategoriaController.createCategoria)
@@ -39,5 +41,11 @@ router.get("/categorias", CategoriaController.findAllCategorias)
 router.get("/categoria/:id", CategoriaController.findCategoriaById)
 router.put("/categoria/:id", CategoriaController.updateCategoria)
 router.delete("/categoria/:id", CategoriaController.deleteCategoriaById)
+
+router.post("/status", StatusController.createStatus)
+router.get("/status", StatusController.findAllStatus)
+router.get("/status/:id", StatusController.findStatusById)
+router.put("/status/:id", StatusController.updateStatus)
+router.delete("/status/:id", StatusController.deleteStatusById)
 
 export {router}

@@ -32,6 +32,7 @@ model Status {
 model Categoria {
   id        Int    @id @default(autoincrement())
   descricao String @unique
+  icone     String?
   Item      Item[]
 }
 

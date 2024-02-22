@@ -82,31 +82,54 @@ export default {
         }
     },
 
+    async countSolicitacoesByStatus(req, res) {
+        try {
+            const { categoria, emailUsuario, status} = req.params;
+
+            const solicitacoes = await prisma.solicitacao.count({
+                where: {
+                    item: {categoriaId: Number(categoria)},
+                    usuario: { email: emailUsuario },
+                    status: {id: Number(status)}
+                }
+            });
+
+            if (!solicitacoes || solicitacoes.length === 0) {
+                return res.json(0);
+            }
+
+            return res.json(solicitacoes);
+        } catch (error) {
+            console.error('Erro ao buscar solicitações:', error);
+            return res.status(500).json({ error: 'Erro interno do servidor' });
+        }
+    },
 
     async updateSolicitacaoStatus(req, res) {
         try {
-            const { id } = req.params
-
+            const { id } = req.params;
             const { status } = req.body;
-
-
-            let solicitacao = await prisma.solicitacao.findUnique({ where: { id: Number(id) } })
-            if (!solicitacao)
-                return res.status(404).json({ error: "solicitacao não existe" })
-
+    
+            let solicitacao = await prisma.solicitacao.findUnique({ where: { id: Number(id) } });
+            
+            if (!solicitacao) {
+                return res.status(404).json({ error: "Solicitação não existe" });
+            }
+    
             solicitacao = await prisma.solicitacao.update({
                 where: { id: Number(id) },
                 data: {
-                    statusId: status
+                    status: { connect: { id: Number(status) } } // Update 'statusId' to 'status'
                 }
             });
-            return res.json(solicitacao)
-
+    
+            return res.json(solicitacao);
         } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: "Não foi possível atualizar o solicitacao" })
+            console.error(error);
+            return res.status(500).json({ error: "Não foi possível atualizar a solicitação" });
         }
     },
+    
 
     async deleteSolicitacaoById(req, res) {
         try {

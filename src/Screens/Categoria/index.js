@@ -14,7 +14,7 @@ export default function Categoria({ navigation, route }) {
 
     const getSolicitacoes = () => {
 
-        fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/lucasgomes145987@gmail.com`)
+        fetch(`https://a9ad-186-211-180-2.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/lucasgomes145987@gmail.com`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -46,6 +46,7 @@ export default function Categoria({ navigation, route }) {
     }
 
     useEffect(() => {
+        setLoading(true)
         getSolicitacoes()
 
     }, [])
@@ -63,7 +64,7 @@ export default function Categoria({ navigation, route }) {
                     Array.isArray(solicitacoes)? (
 
                         solicitacoes.map((solicitacao, index) => (
-                            <Pressable style={styles.bloco} key={index} onPress={() => navigation.navigate('Solicitacao')}>
+                            <Pressable style={styles.bloco} key={index} onPress={() => navigation.navigate('Solicitacao', { tipo: `${categoria}`, screenName:screenName, solicitacaoId:solicitacao.id})}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.subtitle}>{solicitacao.quantidade}x </Text>
                                     <Text style={styles.subtitle}>{solicitacao.item.descricao}</Text>

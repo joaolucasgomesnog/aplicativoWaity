@@ -9,10 +9,20 @@ import { auth } from '../../Services/FireBaseConfig';
 import Loading from '../../components/Loading';
 
 export default function Login({ navigation }) {
-
+    const [hidePassword, setHidePassword] = useState(true)
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [loading, setLoading] = useState(false)
+
+    const handlePassword = () => {
+        if (hidePassword) {
+            setHidePassword(false)
+        }
+        else {
+            setHidePassword(true)
+        }
+    }
+
 
     const handleLogin = () => {
         setLoading(true)
@@ -52,7 +62,7 @@ export default function Login({ navigation }) {
                         placeholderTextColor={'gray'}
                         value={email} onChangeText={(val) => { setEmail(val) }} />
 
-                    <View style={{ position: 'absolute', left: 0, bottom: 2 }}>
+                    <View style={{ position: 'absolute', left: 0, bottom: 5 }}>
                         <FontAwesome5 name="user" size={12} color="gray" />
                     </View>
                 </View>
@@ -62,14 +72,15 @@ export default function Login({ navigation }) {
                 <View style={{ display: 'flex', borderColor: 'gray', borderBottomWidth: 0.5 }}>
 
                     <TextInput style={styles.input}
+                        secureTextEntry={hidePassword}
                         placeholder='Insira sua senha'
                         placeholderTextColor={'gray'}
                         value={password} onChangeText={(val) => { setPassword(val) }} />
 
-                    <View style={{ position: 'absolute', left: 0, bottom: 2 }}>
+                    <View style={{ position: 'absolute', left: 0, bottom: 5 }}>
                         <FontAwesome5 name="key" size={12} color="gray" />
                     </View>
-                    <TouchableOpacity style={{ position: 'absolute', right: 0, bottom: 2 }}>
+                    <TouchableOpacity style={{ position: 'absolute', right: 0, bottom: 5 }} onPress={()=>{handlePassword()}}>
                         <FontAwesome5 name="eye" size={12} color="gray" />
                     </TouchableOpacity>
                 </View>

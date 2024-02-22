@@ -4,9 +4,12 @@ import { Clock } from '@expo/vector-icons'
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
 import { setCustomText } from 'react-native-global-props';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import Loading from '../../components/Loading';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 export default function Home({ navigation }) {
+  const [loading, setLoading] = useState(false)
   const [categorias, setCategorias] = useState([])
   const customTextProps = {
     style: {
@@ -16,7 +19,7 @@ export default function Home({ navigation }) {
 
   const getCategorias = () => {
 
-    fetch("https://7614-186-211-230-19.ngrok-free.app/categorias")
+    fetch("https://a9ad-186-211-180-2.ngrok-free.app/categorias")
       .then(res => res.json())
       .then(dados => {
         console.log(dados)
@@ -24,21 +27,26 @@ export default function Home({ navigation }) {
       })
   }
 
-  useEffect(() => {
-    getCategorias()
 
-  },[])
+
+  useEffect(() => {
+    setLoading(true)
+    getCategorias()
+    setLoading(false)
+  }, [])
 
   return (
     <View style={styles.container}>
-      <Header name={'João Lucas'} profile={true}  />
+      <Loading loading={loading} />
+      <Header name={'João Lucas'} profile={true} />
       <View style={styles.categorys}>
         {
           categorias.map((opcao) =>
-            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={() => navigation.navigate('Categoria',{categoria: opcao.id, screenName: opcao.descricao})}>
+            <TouchableOpacity style={styles.category} activeOpacity={100} onPress={() => navigation.navigate('Categoria', { categoria: opcao.id, screenName: opcao.descricao })}>
               <Text style={styles.itemTitle}>{opcao.descricao}</Text>
-              <Text style={styles.itemText}></Text>
-              <Text style={styles.itemText}>9 pedido(s)</Text>
+              <View style={{width:30, alignItems:'center', justifyContent:'center'}}>
+                <FontAwesome5 name={opcao.icone} size={20} color="black" />
+              </View>
             </TouchableOpacity>
           )
         }
