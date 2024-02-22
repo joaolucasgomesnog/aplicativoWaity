@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Pressable } from 'react-nativ
 import Header from '../../components/Header';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
+import { auth } from '../../Services/FireBaseConfig';
 
 
 export default function Categoria({ navigation, route }) {
@@ -14,7 +15,7 @@ export default function Categoria({ navigation, route }) {
 
     const getSolicitacoes = () => {
 
-        fetch(`https://a9ad-186-211-180-2.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/lucasgomes145987@gmail.com`)
+        fetch(`https://40a2-191-5-206-33.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
