@@ -15,7 +15,7 @@ export default function Categoria({ navigation, route }) {
 
     const getSolicitacoes = () => {
 
-        fetch(`https://40a2-191-5-206-33.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
+        fetch(`https://01b0-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')

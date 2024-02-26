@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Usuario {
-  id          Int           @id @default(autoincrement())
-  nome        String?
-  email       String
-  Solicitacao Solicitacao[]
+  id                    Int                     @id @default(autoincrement())
+  nome                  String?
+  email                 String
+  Solicitacao           Solicitacao[]
+  Responsavel_categoria Responsavel_categoria[]
 }
 
 model Cidade {
@@ -30,10 +31,11 @@ model Status {
 }
 
 model Categoria {
-  id        Int    @id @default(autoincrement())
-  descricao String @unique
-  icone     String?
-  Item      Item[]
+  id                    Int                     @id @default(autoincrement())
+  descricao             String                  @unique
+  icone                 String?
+  Item                  Item[]
+  Responsavel_categoria Responsavel_categoria[]
 }
 
 model Item {
@@ -58,4 +60,12 @@ model Solicitacao {
   usuarioId   Int
   statusId    Int      @default(1)
   itemId      Int
+}
+
+model Responsavel_categoria {
+  id          Int       @id @default(autoincrement())
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  responsavel Usuario   @relation(fields: [usuarioId], references: [id])
+  categoriaId Int
+  usuarioId   Int
 }

@@ -1,10 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { auth } from '../../Services/FireBaseConfig';
+import { signOut } from 'firebase/auth';
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64
 
 
-export default function Header({ name, profile, back, screenName, navigateTo }) {
+export default function Header({ name, profile, back, screenName, navigateTo}) {
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigateTo()
+        } catch (error) {
+            console.error('Erro ao desconectar:', error.message);
+        }
+    };
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -19,8 +29,8 @@ export default function Header({ name, profile, back, screenName, navigateTo }) 
                 {profile ? (
                     <>
                         <Text style={styles.screenName}>{name}</Text>
-                        <TouchableOpacity style={styles.buttonUser}>
-                            <FontAwesome5 name="user" size={20} color="white" />
+                        <TouchableOpacity style={styles.buttonExit} onPress={handleLogout}>
+                            <Ionicons name="exit-outline" size={20} color="white" />
                         </TouchableOpacity>
                     </>
                 ) : null}
@@ -36,7 +46,7 @@ const styles = StyleSheet.create({
         paddingTop: statusBarHeight,
         paddingStart: 16,
         paddingEnd: 16,
-        paddingBottom: 44,
+        paddingBottom: 30,
     },
     content: {
         flexDirection: "row",
@@ -47,10 +57,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
 
     },
-    buttonUser: {
+    buttonExit: {
         width: 35,
         height: 35,
-        backgroundColor: 'rgba(255,255,255,0.5)',
+        borderColor: 'gray',
+        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 100,

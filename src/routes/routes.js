@@ -7,12 +7,13 @@ import Signup from '../Screens/Signup';
 import { useState } from 'react';
 import React from 'react';
 import Categoria from '../Screens/Categoria';
-import Equipamentos from '../Screens/Equipamentos';
+
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
   const [user, setUser] = useState()
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

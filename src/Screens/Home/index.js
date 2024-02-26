@@ -7,6 +7,8 @@ import { setCustomText } from 'react-native-global-props';
 import { useState, useEffect } from 'react';
 import Loading from '../../components/Loading';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { auth } from '../../Services/FireBaseConfig';
+
 
 export default function Home({ navigation }) {
   const [loading, setLoading] = useState(false)
@@ -17,9 +19,10 @@ export default function Home({ navigation }) {
     }
   }
 
+
   const getCategorias = () => {
 
-    fetch("https://40a2-191-5-206-33.ngrok-free.app/categorias")
+    fetch("https://01b0-186-211-230-19.ngrok-free.app/categorias")
       .then(res => res.json())
       .then(dados => {
         console.log(dados)
@@ -37,8 +40,9 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
+
       <Loading loading={loading} />
-      <Header name={'João Lucas'} profile={true} />
+      <Header name={'Categorias'} profile={true} navigateTo={()=>navigation.navigate("Login")}/>
       <View style={styles.categorys}>
         {
           categorias.map((opcao) =>
@@ -50,8 +54,9 @@ export default function Home({ navigation }) {
             </TouchableOpacity>
           )
         }
-
+      
       </View>
+      <Text style={styles.email}>{auth.currentUser.email}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: 'poppins',
     flexDirection: 'column',
     gap: 10,
-    marginTop: -24,
+    marginTop: 10,
   },
   category: {
     backgroundColor: 'white',
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
     paddingBottom: 22,
     paddingTop: 22,
     zIndex: 99,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   item: {
 
@@ -125,6 +130,13 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flexDirection: 'row'
+  },
+  email: {
+    color: 'gray',
+
+    alignSelf:'center',
+    position:'absolute',
+    bottom: 10
   }
 })
 

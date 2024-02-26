@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginTop: -24,
     },
     category: {
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         flexDirection: 'row',
         paddingStart: 18,
         paddingEnd: 18,
