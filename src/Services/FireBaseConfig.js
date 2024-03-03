@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword} from 'firebase/auth'
+import {browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword} from 'firebase/auth'
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
 export const db = getFirestore(app);
 
-setPersistence(auth, browserSessionPersistence)
+setPersistence(auth, browserLocalPersistence)
   .then(() => {
     // Existing and future Auth states are now persisted in the current
     // session only. Closing the window would clear any existing state even

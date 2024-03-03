@@ -16,7 +16,7 @@ export default function Categoria({ navigation, route }) {
 
     const getSolicitacoes = () => {
         
-        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
+        fetch(`https://aplicativo-logistica-api.vercel.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -48,10 +48,14 @@ export default function Categoria({ navigation, route }) {
     }
 
     useEffect(() => {
-        setLoading(true)
-        getSolicitacoes()
-
-    }, [])
+        const unsubscribe = navigation.addListener('focus', () => {
+            setLoading(true);
+            getSolicitacoes();
+        });
+    
+        // Cleanup: remove o ouvinte ao desmontar o componente
+        return unsubscribe;
+    }, [navigation]);
     return (
         <View style={styles.container}>
             <Header profile={false} back={true} screenName={screenName} navigateTo={() => navigation.navigate('Home')} />

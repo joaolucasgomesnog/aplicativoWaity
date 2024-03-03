@@ -45,7 +45,7 @@ export default {
     async findSolicitacaoById(req, res) {
         try {
             const { id } = req.params
-            const solicitacao = await prisma.solicitacao.findUnique({ where: { id: Number(id) } })
+            const solicitacao = await prisma.solicitacao.findUnique({ where: { id: Number(id) }, include: {usuario:true}})
             if (!solicitacao) return res.json({ error: "solicitacao não existe" })
             return res.json(solicitacao)
 

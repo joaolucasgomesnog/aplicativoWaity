@@ -31,7 +31,7 @@ export default function Solicitacao({ navigation, route }) {
     
 
     const getiItems = () => {
-        fetch(`https://71bc-186-211-230-19.ngrok-free.app/items/${tipo}`)
+        fetch(`https://aplicativo-logistica-api.vercel.app/items/${tipo}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -42,7 +42,7 @@ export default function Solicitacao({ navigation, route }) {
     }
 
     const getStatusList = () => {
-        fetch(`https://71bc-186-211-230-19.ngrok-free.app/status`)
+        fetch(`https://aplicativo-logistica-api.vercel.app/status`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -54,7 +54,7 @@ export default function Solicitacao({ navigation, route }) {
 
     const getiCidades = () => {
 
-        fetch("https://71bc-186-211-230-19.ngrok-free.app/cidades")
+        fetch("https://aplicativo-logistica-api.vercel.app/cidades")
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -66,7 +66,7 @@ export default function Solicitacao({ navigation, route }) {
 
     const getSolicitacao = () => {
         if (solicitacaoId != null && solicitacaoId != undefined) {
-            fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`)
+            fetch(`https://aplicativo-logistica-api.vercel.app/solicitacao/${solicitacaoId}`)
                 .then(res => res.json())
                 .then(dados => {
                     console.log(dados)
@@ -75,14 +75,14 @@ export default function Solicitacao({ navigation, route }) {
                     setQuantidade(parseInt(dados.quantidade))
                     setObservacao(dados.observacao)
                     setStatus(dados.statusId)
-                    setSolicitante(dados.usunario.nome)
+                    setSolicitante(dados.usuario.nome)
                 })
         }
     }
 
 
     const lancarSolicitacao = (solicitacaoData) => {
-        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao`, {
+        fetch(`https://aplicativo-logistica-api.vercel.app/solicitacao`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
@@ -97,7 +97,7 @@ export default function Solicitacao({ navigation, route }) {
             })
     }
     const atualizarSolicitacao = (solicitacaoData) => {
-        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`, {
+        fetch(`https://aplicativo-logistica-api.vercel.app/solicitacao/${solicitacaoId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
