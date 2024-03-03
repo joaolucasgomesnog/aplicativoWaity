@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-export default{
+export default {
 
     async createUsuario(req, res) {
         const { nome, email } = req.body;
@@ -35,7 +35,7 @@ export default{
     async findUsuarioById(req, res) {
         try {
             const { id } = req.params
-            const usuario = await prisma.usuario.findUnique({ where: { id: Number(id) }})
+            const usuario = await prisma.usuario.findUnique({ where: { id: Number(id) } })
             if (!usuario) return res.json({ error: "usuario não existe" })
             return res.json(usuario)
 
@@ -44,36 +44,19 @@ export default{
         }
     },
 
-    // async findUsuarioByEmail(req, res) {
-    //     try {
-    //         const { email } = req.params
-    //         const usuario = await prisma.usuario.findMany({ where: { email: email }})
-    //         if (!usuario) return res.json({ error: "usuario não existe" })
-    //         return res.json(usuario)
-
-    //     } catch (error) {
-    //         return res.json({ error })
-    //     }
-    // },
-
     async findUsuarioByEmail(req, res) {
         try {
-            const { email } = req.params;
-            const usuario = await prisma.$queryRaw`
-            SELECT * FROM "Usuario"
-            WHERE LOWER("email") LIKE ${`%${email.toLowerCase()}%`}
-        `;
-    
-            if (!usuario || usuario.length === 0) {
-                return res.json({ error: "usuario não existe" });
-            }
-    
-            return res.json(usuario);
+            const { email } = req.params
+            const usuario = await prisma.usuario.findMany({ where: { email: email } })
+            if (!usuario) return res.json({ error: "usuario não existe" })
+            return res.json(usuario)
+
         } catch (error) {
-            console.error("Erro ao buscar usuarios:", error);
-            return res.status(500).json({ error: "Ocorreu um erro ao buscar usuarios." });
+            return res.json({ error })
         }
     },
+
+
 
     async updateUsuario(req, res) {
         try {
@@ -86,18 +69,18 @@ export default{
             if (!usuario)
                 return res.status(404).json({ error: "usuario não existe" })
 
-            usuario = await prisma.usuario.update({ 
-                where: { id: Number(id) }, 
-                data: { 
-                    nome, 
+            usuario = await prisma.usuario.update({
+                where: { id: Number(id) },
+                data: {
+                    nome,
                     email
-                } 
+                }
             });
             return res.json(usuario)
 
-        } catch (error) { 
+        } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: "Não foi possível atualizar o usuario" }) 
+            return res.status(500).json({ error: "Não foi possível atualizar o usuario" })
         }
     },
 
@@ -107,7 +90,7 @@ export default{
             let usuario = await prisma.usuario.findUnique({ where: { id: Number(id) } })
             if (!usuario) return res.json({ error: "usuario não existe" })
             await prisma.usuario.delete({ where: { id: Number(id) } })
-            return res.json({message: "usuario deletado"})
+            return res.json({ message: "usuario deletado" })
         } catch (error) {
             return res.json({ error })
         }
