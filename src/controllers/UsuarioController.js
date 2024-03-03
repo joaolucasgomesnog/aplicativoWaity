@@ -35,7 +35,7 @@ export default {
     async findUsuarioById(req, res) {
         try {
             const { id } = req.params
-            const usuario = await prisma.usuario.findUnique({ where: { id: Number(id) } })
+            const usuario = await prisma.usuario.findMany({ where: { id: Number(id) } })
             if (!usuario) return res.json({ error: "usuario não existe" })
             return res.json(usuario)
 
