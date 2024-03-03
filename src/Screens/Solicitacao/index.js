@@ -12,6 +12,7 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
+import { auth } from '../../Services/FireBaseConfig';
 
 
 
@@ -45,7 +46,6 @@ export default function Solicitacao({ navigation, route }) {
         fetch(`https://aplicativo-logistica-api.vercel.app/status`)
             .then(res => res.json())
             .then(dados => {
-                console.log('dados')
                 console.log(dados)
                 setStatusList(dados)
 
@@ -57,9 +57,18 @@ export default function Solicitacao({ navigation, route }) {
         fetch("https://aplicativo-logistica-api.vercel.app/cidades")
             .then(res => res.json())
             .then(dados => {
-                console.log('dados')
                 console.log(dados)
                 setCidadeList(dados)
+
+            })
+    }
+    const getUsuario = () => {
+
+        fetch(`https://aplicativo-logistica-api.vercel.app/usuario/${auth.currentUser.email}`)
+            .then(res => res.json())
+            .then(dados => {
+                console.log(dados)
+                setSolicitante(dados)
 
             })
     }
@@ -117,12 +126,13 @@ export default function Solicitacao({ navigation, route }) {
                 status: status
             })
         } else {
+            getUsuario()
             lancarSolicitacao({
                 itemId: item,
                 cidadeId: cidade,
                 quantidade: quantidade,
                 observacao: observacao,
-                usuarioId: 1
+                usuarioId: solicitante.id,
             })
 
         }
