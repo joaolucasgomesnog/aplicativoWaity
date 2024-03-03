@@ -11,7 +11,7 @@ const router = Router()
 router.post("/usuario", UsuarioController.createUsuario)
 router.get("/usuarios", UsuarioController.findAllUsuarios)
 router.get("/usuario/:id", UsuarioController.findUsuarioById)
-router.get("/usuario/:emailUsuario", UsuarioController.find)
+router.get("/usuario/:emailUsuario", UsuarioController.findUsuarioByEmail)
 router.put("/usuario/:id", UsuarioController.updateUsuario)
 router.delete("/usuario/:id", UsuarioController.deleteUsuarioById)
 
