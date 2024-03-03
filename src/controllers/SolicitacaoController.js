@@ -54,33 +54,59 @@ export default {
         }
     },
 
-    async findSolicitacoesCategoria(req, res) {
+    async findSolicitacoesCategoriaEmail(req, res) {
         try {
             const { categoria, emailUsuario } = req.params;
-
-            const solicitacoes = await prisma.solicitacao.findMany({
+    
+            const responsavel = await prisma.responsavel_categoria.findMany({
                 where: {
-                    item: {categoriaId: Number(categoria)},
-                    usuario: { email: emailUsuario }
+                    categoria: {id: Number(categoria)},
+                    responsavel: {email: emailUsuario}  // Supondo que `emailUsuario` seja o ID do usuário
                 },
-                include: {
-                    cidade: true,
-                    usuario: true,
-                    status: true,
-                    item: true,
-                }
             });
-
+    
+            let solicitacoes;
+            console.log(responsavel)
+            if (responsavel) {
+                // Se o usuário é o responsável, busca todas as solicitações
+                solicitacoes = await prisma.solicitacao.findMany({
+                    where: {
+                        item: {categoriaId: Number(categoria)},
+                    },
+                    include: {
+                        cidade: true,
+                        usuario: true,
+                        status: true,
+                        item: true,
+                    }
+                });
+            } else {
+                // Se não é o responsável, busca apenas as solicitações específicas do usuário
+                solicitacoes = await prisma.solicitacao.findMany({
+                    where: {
+                        item: {categoriaId: Number(categoria)},
+                        usuario: { email: emailUsuario }
+                    },
+                    include: {
+                        cidade: true,
+                        usuario: true,
+                        status: true,
+                        item: true,
+                    }
+                });
+            }
+    
             if (!solicitacoes || solicitacoes.length === 0) {
                 return res.json({ error: "Nenhuma solicitação encontrada" });
             }
-
+    
             return res.json(solicitacoes);
         } catch (error) {
             console.error('Erro ao buscar solicitações:', error);
             return res.status(500).json({ error: 'Erro interno do servidor' });
         }
     },
+    
 
     async countSolicitacoesByStatus(req, res) {
         try {

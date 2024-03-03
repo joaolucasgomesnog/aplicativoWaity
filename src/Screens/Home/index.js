@@ -22,7 +22,7 @@ export default function Home({ navigation }) {
 
   const getCategorias = () => {
 
-    fetch("https://01b0-186-211-230-19.ngrok-free.app/categorias")
+    fetch("https://71bc-186-211-230-19.ngrok-free.app/categorias")
       .then(res => res.json())
       .then(dados => {
         console.log(dados)

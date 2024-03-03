@@ -25,11 +25,13 @@ export default function Solicitacao({ navigation, route }) {
     const [observacao, setObservacao] = useState()
     const [status, setStatus] = useState()
     const [statusList, setStatusList] = useState([])
+    const [solicitante, setSolicitante] = useState()
     const [isFocus, setIsFocus] = useState(false)
     const [loading, setLoading] = useState(false)
+    
 
     const getiItems = () => {
-        fetch(`https://7614-186-211-230-19.ngrok-free.app/items/${tipo}`)
+        fetch(`https://71bc-186-211-230-19.ngrok-free.app/items/${tipo}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -40,7 +42,7 @@ export default function Solicitacao({ navigation, route }) {
     }
 
     const getStatusList = () => {
-        fetch(`https://7614-186-211-230-19.ngrok-free.app/status`)
+        fetch(`https://71bc-186-211-230-19.ngrok-free.app/status`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -52,7 +54,7 @@ export default function Solicitacao({ navigation, route }) {
 
     const getiCidades = () => {
 
-        fetch("https://7614-186-211-230-19.ngrok-free.app/cidades")
+        fetch("https://71bc-186-211-230-19.ngrok-free.app/cidades")
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
@@ -64,7 +66,7 @@ export default function Solicitacao({ navigation, route }) {
 
     const getSolicitacao = () => {
         if (solicitacaoId != null && solicitacaoId != undefined) {
-            fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`)
+            fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`)
                 .then(res => res.json())
                 .then(dados => {
                     console.log(dados)
@@ -73,13 +75,14 @@ export default function Solicitacao({ navigation, route }) {
                     setQuantidade(parseInt(dados.quantidade))
                     setObservacao(dados.observacao)
                     setStatus(dados.statusId)
+                    setSolicitante(dados.usunario.nome)
                 })
         }
     }
 
 
     const lancarSolicitacao = (solicitacaoData) => {
-        fetch(`https://7614-186-211-230-19.ngrok-free.app/solicitacao`, {
+        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
@@ -94,7 +97,7 @@ export default function Solicitacao({ navigation, route }) {
             })
     }
     const atualizarSolicitacao = (solicitacaoData) => {
-        fetch(`https://a9ad-186-211-180-2.ngrok-free.app/solicitacao/${solicitacaoId}`, {
+        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacao/${solicitacaoId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(solicitacaoData)
@@ -236,6 +239,10 @@ export default function Solicitacao({ navigation, route }) {
                                     setIsFocus(false);
                                 }}
                             />
+                            <Text>Solicitante:</Text>
+                            <View style={styles.quantityButton}>
+                                <Text>{`${solicitante}`}</Text>
+                            </View>
                         </>
                     ) : null
                 }
@@ -387,7 +394,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '50%',
+        width: '100%',
 
     },
     textArea: {

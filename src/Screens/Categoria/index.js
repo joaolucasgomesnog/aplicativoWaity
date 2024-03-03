@@ -10,12 +10,13 @@ export default function Categoria({ navigation, route }) {
     const { categoria, screenName } = route.params
     const [solicitacoes, setSolicitacoes] = useState([])
     const [loading, setLoading] = useState(false)
+    const [reponsavel, setResponsavel] = useState()
 
 
 
     const getSolicitacoes = () => {
-
-        fetch(`https://01b0-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
+        
+        fetch(`https://71bc-186-211-230-19.ngrok-free.app/solicitacoes/categoria/${categoria}/usuario/${auth.currentUser.email}`)
             .then(res => res.json())
             .then(dados => {
                 console.log('dados')
