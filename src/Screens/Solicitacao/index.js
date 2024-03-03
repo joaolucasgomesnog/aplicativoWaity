@@ -67,6 +67,7 @@ export default function Solicitacao({ navigation, route }) {
         fetch(`https://aplicativo-logistica-api.vercel.app/usuario/email/${auth.currentUser.email}`)
             .then(res => res.json())
             .then(dados => {
+                console.log(auth.currentUser.email)
                 console.log(dados)
                 setSolicitante(dados)
 
