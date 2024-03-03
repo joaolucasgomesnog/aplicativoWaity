@@ -44,34 +44,31 @@ export default{
         }
     },
 
+    // async findUsuarioByEmail(req, res) {
+    //     try {
+    //         const { email } = req.params
+    //         const usuario = await prisma.usuario.findMany({ where: { email: email }})
+    //         if (!usuario) return res.json({ error: "usuario não existe" })
+    //         return res.json(usuario)
+
+    //     } catch (error) {
+    //         return res.json({ error })
+    //     }
+    // },
+
     async findUsuarioByEmail(req, res) {
         try {
-            const { email } = req.params
-            const usuario = await prisma.usuario.findMany({ where: { email: email }})
-            if (!usuario) return res.json({ error: "usuario não existe" })
-            return res.json(usuario)
-
-        } catch (error) {
-            return res.json({ error })
-        }
-    },
-
-    async findUsuarioByAll(req, res) {
-        try {
-            const { nome } = req.params;
-            const usuarios = await prisma.$queryRaw`
+            const { email } = req.params;
+            const usuario = await prisma.$queryRaw`
             SELECT * FROM "usuario"
-            WHERE LOWER("nome") LIKE ${`%${nome.toLowerCase()}%`}
-            OR "cpf" LIKE ${`%${nome}%`}
-            OR "rg" LIKE ${`%${nome}%`};
-            
+            WHERE LOWER("email") LIKE ${`%${email.toLowerCase()}%`}
         `;
     
-            if (!usuarios || usuarios.length === 0) {
+            if (!usuario || usuario.length === 0) {
                 return res.json({ error: "usuario não existe" });
             }
     
-            return res.json(usuarios);
+            return res.json(usuario);
         } catch (error) {
             console.error("Erro ao buscar usuarios:", error);
             return res.status(500).json({ error: "Ocorreu um erro ao buscar usuarios." });
