@@ -10,7 +10,7 @@ export default function Categoria({ navigation, route }) {
     const { categoria, screenName } = route.params
     const [solicitacoes, setSolicitacoes] = useState([])
     const [loading, setLoading] = useState(false)
-    const [reponsavel, setResponsavel] = useState()
+    
 
 
 

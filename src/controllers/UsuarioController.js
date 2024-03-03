@@ -44,6 +44,18 @@ export default{
         }
     },
 
+    async findUsuarioByEmail(req, res) {
+        try {
+            const { email } = req.params
+            const usuario = await prisma.usuario.findUnique({ where: { email: email }})
+            if (!usuario) return res.json({ error: "usuario não existe" })
+            return res.json(usuario)
+
+        } catch (error) {
+            return res.json({ error })
+        }
+    },
+
     async findUsuarioByAll(req, res) {
         try {
             const { nome } = req.params;
