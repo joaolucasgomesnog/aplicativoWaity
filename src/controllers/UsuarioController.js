@@ -60,8 +60,8 @@ export default{
         try {
             const { email } = req.params;
             const usuario = await prisma.$queryRaw`
-            SELECT * FROM "usuario"
-            WHERE LOWER("email") = ${`%${email.toLowerCase()}%`}
+            SELECT * FROM "Usuario"
+            WHERE LOWER("email") LIKE ${`%${email.toLowerCase()}%`}
         `;
     
             if (!usuario || usuario.length === 0) {
