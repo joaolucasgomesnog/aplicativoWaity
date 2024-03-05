@@ -47,7 +47,7 @@ export default {
     async findUsuarioByEmail(req, res) {
         try {
             const { emailstring } = req.params
-            const usuario = await prisma.usuario.findUnique({ where: { email: emailstring.trim() } });
+            const usuario = await prisma.usuario.findUnique({ where: { email: emailstring } });
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
             return res.json(usuario)
