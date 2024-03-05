@@ -11,9 +11,8 @@ datasource db {
 }
 
 model Usuario {
-  id                    Int                     @id @default(autoincrement())
+  email                 String      @id
   nome                  String?
-  email                 String      @unique
   Solicitacao           Solicitacao[]
   Responsavel_categoria Responsavel_categoria[]
 }
@@ -51,13 +50,13 @@ model Solicitacao {
   id          Int      @id @default(autoincrement())
   dataCriacao DateTime @default(now())
   cidade      Cidade   @relation(fields: [cidadeId], references: [id])
-  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuario     Usuario  @relation(fields: [usuarioEmail], references: [email])
   status      Status?  @relation(fields: [statusId], references: [id])
   item        Item     @relation(fields: [itemId], references: [id])
   quantidade  Int
   observacao  String?
   cidadeId    Int
-  usuarioId   Int
+  usuarioEmail   String
   statusId    Int      @default(1)
   itemId      Int
 }
@@ -65,7 +64,7 @@ model Solicitacao {
 model Responsavel_categoria {
   id          Int       @id @default(autoincrement())
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  responsavel Usuario   @relation(fields: [usuarioId], references: [id])
+  responsavel Usuario   @relation(fields: [usuarioEmail], references: [email])
   categoriaId Int
-  usuarioId   Int
+  usuarioEmail   String
 }
