@@ -45,6 +45,10 @@ export default {
     },
 
     async findUsuarioByEmail(req, res) {
+        prisma.$on('query', (e) => {
+            console.log('Query:', e.query);
+        });
+
         try {
             const { emailstring } = req.params
             const usuario = await prisma.$queryRaw`
@@ -52,14 +56,14 @@ export default {
             WHERE LOWER("email") LIKE ${`%${toString(emailstring)}%`}
             
         `;
-    
+
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
             return res.json(usuario)
 
         } catch (error) {
             console.error("Erro ao buscar usuario:", error)
-            return res.json({ error})
+            return res.json({ error })
         }
     },
 
