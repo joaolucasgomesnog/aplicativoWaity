@@ -47,7 +47,7 @@ export default {
     async findUsuarioByEmail(req, res) {
         try {
             const { emailstring } = req.params
-            const usuario = await prisma.$queryRawUnsafe`
+            const usuario = await prisma.$queryRaw`
             SELECT * FROM "Usuario"
             WHERE LOWER("email") LIKE ${`%${emailstring.toLowerCase()}%`}
             
@@ -58,7 +58,8 @@ export default {
             return res.json(usuario)
 
         } catch (error) {
-            return res.json({ error })
+            console.error("Erro ao buscar usuario:", error)
+            return res.json({ error})
         }
     },
 
