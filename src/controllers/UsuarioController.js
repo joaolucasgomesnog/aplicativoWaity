@@ -49,9 +49,13 @@ export default {
             const { emailstring } = req.params
             const usuario = await prisma.$queryRawUnsafe`
             SELECT * FROM "Usuario"
-            WHERE LOWER("email") LIKE ${`%${emailstring.toLowerCase()}%`}    
+            WHERE LOWER("email") LIKE ${`%${emailstring.toLowerCase()}%`}
+            
         `;
-
+    
+            if (!usuario) return res.json({ error: "usuario não existe" })
+            console.log('Usuario:', usuario)
+            return res.json(usuario)
 
         } catch (error) {
             return res.json({ error })
