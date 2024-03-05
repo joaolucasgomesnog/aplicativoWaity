@@ -49,6 +49,7 @@ export default {
             const { emailstring } = req.params
             const usuario = await prisma.usuario.findUnique({ where: { email: emailstring.trim() } });
             if (!usuario) return res.json({ error: "usuario não existe" })
+            console.log('Usuario:', usuario)
             return res.json(usuario)
 
         } catch (error) {
