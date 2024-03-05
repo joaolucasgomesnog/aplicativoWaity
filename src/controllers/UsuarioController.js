@@ -45,17 +45,10 @@ export default {
     },
 
     async findUsuarioByEmail(req, res) {
-        prisma.$on('query', (e) => {
-            console.log('Query:', e.query);
-        });
 
         try {
             const { emailstring } = req.params
-            const usuario = await prisma.$queryRaw`
-            SELECT * FROM "Usuario"
-            WHERE LOWER("email") LIKE ${`%${toString(emailstring)}%`}
-            
-        `;
+            const usuario = await prisma.usuario.findUnique({where: {email: emailstring}})
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
