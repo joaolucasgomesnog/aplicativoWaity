@@ -49,7 +49,7 @@ export default {
             const { emailstring } = req.params
             const usuario = await prisma.$queryRaw`
             SELECT * FROM "Usuario"
-            WHERE LOWER("email") LIKE ${`%${emailstring.toLowerCase()}%`}
+            WHERE LOWER("email") LIKE ${`%${toString(emailstring)}%`}
             
         `;
     
