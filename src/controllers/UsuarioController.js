@@ -49,7 +49,7 @@ export default {
         try {
             const { emailUsuario } = req.params
         
-            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = ${emailUsuario}`;
+            const usuario = await prisma.usuario.findUnique({where:{email:emailUsuario}});
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
