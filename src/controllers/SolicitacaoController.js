@@ -67,7 +67,7 @@ export default {
     
             let solicitacoes;
             console.log(responsavel)
-            if (responsavel) {
+            if (responsavel && responsavel.length !==0) {
                 // Se o usuário é o responsável, busca todas as solicitações
                 solicitacoes = await prisma.solicitacao.findMany({
                     where: {
