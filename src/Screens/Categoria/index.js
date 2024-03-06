@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import Header from '../../components/Header';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
@@ -65,6 +65,8 @@ export default function Categoria({ navigation, route }) {
             </TouchableOpacity>
             <StatusBar style="auto" />
             <Text style={styles.title}>Últimas solicitações</Text>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollsolcitacoes}>
+
             <View style={styles.news}>
                 {
                     Array.isArray(solicitacoes)? (
@@ -90,6 +92,8 @@ export default function Categoria({ navigation, route }) {
                     )
                 }
             </View>
+
+            </ScrollView>
             <StatusBar style="auto" />
         </View>
     );
@@ -193,5 +197,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'poppins',
         color: 'white'
+    },
+    scrollsolcitacoes: {
+        marginBottom:80
+        
     },
 });

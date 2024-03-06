@@ -78,6 +78,9 @@ export default {
                         usuario: true,
                         status: true,
                         item: true,
+                    },
+                    orderBy: {
+                        dataCriacao: 'asc'
                     }
                 });
             } else {

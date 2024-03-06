@@ -127,7 +127,6 @@ export default function Solicitacao({ navigation, route }) {
                 status: status
             })
         } else {
-            getUsuario()
             lancarSolicitacao({
                 itemId: item,
                 cidadeId: cidade,
@@ -146,6 +145,9 @@ export default function Solicitacao({ navigation, route }) {
             getStatusList()
             getSolicitacao()
             setEditavel(false)
+        }
+        else {
+            getUsuario()
         }
 
         setLoading(false)
@@ -342,7 +344,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         position: 'absolute',
         bottom: 20,
-        zIndex: 99,
+   
         justifyContent: 'center',
         fontSize: 18,
         fontWeight: 'bold',
