@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import Header from '../../components/Header';
 import Metricas from '../../components/Metricas';
@@ -42,7 +42,7 @@ export default function Login({ navigation }) {
     }
     return (
 
-
+        <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
             <Loading loading={loading}/>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -93,6 +93,7 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
             <StatusBar style="auto" />
         </View>
+        </SafeAreaView>
 
     );
 }
@@ -152,5 +153,9 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: '600'
+    },
+    safeArea: {
+        flex: 1,
+        justifyContent: 'center'
     }
 });

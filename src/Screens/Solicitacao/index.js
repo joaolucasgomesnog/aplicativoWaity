@@ -6,7 +6,8 @@ import {
     Text,
     TouchableOpacity,
     View,
-    TextInput
+    TextInput,
+    ViewBase
 } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -30,6 +31,7 @@ export default function Solicitacao({ navigation, route }) {
     const [isFocus, setIsFocus] = useState(false)
     const [loading, setLoading] = useState(false)
     const [editavel, setEditavel] = useState(true)
+    const [itemDisponivel, setItemDisponivel] = useState(true)
 
     const getiItems = () => {
         fetch(`https://aplicativo-logistica-api.vercel.app/items/${tipo}`)
@@ -127,13 +129,15 @@ export default function Solicitacao({ navigation, route }) {
                 status: status
             })
         } else {
-            lancarSolicitacao({
-                itemId: item,
-                cidadeId: cidade,
-                quantidade: quantidade,
-                observacao: observacao,
-                usuarioId: solicitante.id,
-            })
+            if (itemDisponivel) {
+                lancarSolicitacao({
+                    itemId: item,
+                    cidadeId: cidade,
+                    quantidade: quantidade,
+                    observacao: observacao,
+                    usuarioId: solicitante.id,
+                })
+            }
 
         }
     }
@@ -185,6 +189,11 @@ export default function Solicitacao({ navigation, route }) {
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={itemNew => {
+                            if (itemList.find((i) => i.id == itemNew.value).disponivel) {
+                                setItemDisponivel(true)
+                            } else {
+                                setItemDisponivel(false)
+                            }
                             setItem(itemNew.value);
                             setIsFocus(false);
                         }}
@@ -215,55 +224,61 @@ export default function Solicitacao({ navigation, route }) {
                         }}
                     />
                 </View>
-            <Text>Quantidade</Text>
-            <View style={styles.quantityButton} pointerEvents={editavel ? "auto" : "none"} >
-                <TouchableOpacity onPress={() => { quantidade > 1 ? setQuantidade(quantidade - 1) : console.log(quantidade) }}>
-                    <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
-                </TouchableOpacity>
+                <Text>Quantidade</Text>
+                <View style={styles.quantityButton} pointerEvents={editavel ? "auto" : "none"} >
+                    <TouchableOpacity onPress={() => { quantidade > 1 ? setQuantidade(quantidade - 1) : console.log(quantidade) }}>
+                        <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
+                    </TouchableOpacity>
 
-                <TextInput placeholder='1' value={String(quantidade)} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
+                    <TextInput placeholder='1' value={String(quantidade)} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
 
-                <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
-                    <FontAwesome5 name="plus" size={15} color="black" />
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
+                        <FontAwesome5 name="plus" size={15} color="black" />
+                    </TouchableOpacity>
+                </View>
 
-            <Text>Observação</Text>
-            <TextInput style={styles.textArea} multiline={true} value={observacao} editable={editavel} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
-            {
-                solicitacaoId != null && solicitacaoId != undefined ? (
-                    <>
-                        <Text style={{ marginTop: 10 }}>Status</Text>
-                        <Dropdown
+                <Text>Observação</Text>
+                <TextInput style={styles.textArea} multiline={true} value={observacao} editable={editavel} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
+                {
+                    solicitacaoId != null && solicitacaoId != undefined ? (
+                        <>
+                            <Text style={{ marginTop: 10 }}>Status</Text>
+                            <Dropdown
 
-                            style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={statusList.map(item => ({ label: item.descricao, value: item.id }))}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={!isFocus ? 'Marque um status' : '...'}
-                            searchPlaceholder="Search..."
-                            value={status}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
-                            onChange={statusNew => {
-                                setStatus(parseInt(statusNew.value));
-                                setIsFocus(false);
-                            }}
-                        />
-                        <Text>Solicitante:</Text>
-                        <View style={styles.quantityButton}>
-                            <Text>{`${solicitante}`}</Text>
+                                style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                data={statusList.map(item => ({ label: item.descricao, value: item.id }))}
+                                search
+                                maxHeight={300}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!isFocus ? 'Marque um status' : '...'}
+                                searchPlaceholder="Search..."
+                                value={status}
+                                onFocus={() => setIsFocus(true)}
+                                onBlur={() => setIsFocus(false)}
+                                onChange={statusNew => {
+                                    setStatus(parseInt(statusNew.value));
+                                    setIsFocus(false);
+                                }}
+                            />
+                            <Text>Solicitante:</Text>
+                            <View style={styles.quantityButton}>
+                                <Text>{`${solicitante}`}</Text>
+                            </View>
+                        </>
+                    ) : itemDisponivel != true ? (
+                        <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20, flexDirection:'row', gap: 10}}>
+                            <FontAwesome5 name="exclamation-triangle" size={15} color="red" />
+                            <Text style={styles.aviso}>Item não disponivel</Text>
                         </View>
-                    </>
-                ) : null
-            }
-        </View>
+                    ) : null
+
+                }
+            </View>
 
         </View >
     );
@@ -344,7 +359,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         position: 'absolute',
         bottom: 20,
-   
+
         justifyContent: 'center',
         fontSize: 18,
         fontWeight: 'bold',
@@ -424,5 +439,13 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         textAlignVertical: 'top',
         color: 'black'
+    },
+    aviso : {
+        color:'red',
+        fontWeight: "bold",
+        fontSize: 16,
+        
+
+
     }
 });
