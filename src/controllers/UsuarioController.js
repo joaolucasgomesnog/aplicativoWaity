@@ -49,10 +49,7 @@ export default {
         try {
             const { emailstring } = req.params
             const emailTratado = emailstring.split('@')
-            const usuario = await prisma.$queryRaw`
-            SELECT * FROM "Usuario"
-            WHERE "email" LIKE '%' || ${emailTratado[0]} || '%'
-            `
+            const usuario = await prisma.usuario.findMany({where:{email:{contains:emailTratado[0]}}})
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
