@@ -51,7 +51,7 @@ export default {
             const emailTratado = emailstring.spit('@')
             const usuario = await prisma.$queryRaw`
             select  * from "Usuario"
-            where email LIKE ${emailTratado[0]}
+            where "email" LIKE ${`%${emailTratado[0]}%`
             `
 
             if (!usuario) return res.json({ error: "usuario não existe" })
