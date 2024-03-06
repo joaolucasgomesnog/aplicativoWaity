@@ -48,7 +48,6 @@ export default {
 
         try {
             const { emailstring } = req.params
-            const emailTratado = emailstring.split('@')
             const usuario = await prisma.usuario.findMany({where:{email:emailstring}})
 
             if (!usuario) return res.json({ error: "usuario não existe" })
