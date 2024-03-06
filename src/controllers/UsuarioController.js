@@ -48,10 +48,10 @@ export default {
 
         try {
             const { emailstring } = req.params
-            const emailTratado = emailstring.spit('@')
+            const emailTratado = emailstring.split('@')
             const usuario = await prisma.$queryRaw`
             select  * from "Usuario"
-            where "email" LIKE ${`%${emailTratado[0]}%`}
+            where "email"  ${`%${emailTratado[0]}%`}
             `
 
             if (!usuario) return res.json({ error: "usuario não existe" })
