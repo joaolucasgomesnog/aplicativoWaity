@@ -47,13 +47,13 @@ export default {
     async findUsuarioByEmail(req, res) {
 
         try {
-            const { emailstring } = req.params
+            const { emailUsuario } = req.params
         
-            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = ${emailstring}`;
+            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = ${emailUsuario}`;
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
-            return res.json({email:emailstring})
+            return res.json(usuario)
 
         } catch (error) {
             console.error("Erro ao buscar usuario:", error)
