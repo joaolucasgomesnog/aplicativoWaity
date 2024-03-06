@@ -53,7 +53,7 @@ export default {
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
-            return res.json(emailstring)
+            return res.json({email:emailstring})
 
         } catch (error) {
             console.error("Erro ao buscar usuario:", error)
