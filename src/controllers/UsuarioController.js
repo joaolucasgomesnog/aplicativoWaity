@@ -48,8 +48,7 @@ export default {
 
         try {
             const { emailstring } = req.params
-            teste = 'lucasgomes145987'
-            const usuario = await prisma.usuario.findMany({where:{email: {contains: teste}}})
+            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = 'lucasgomes145987@gmail.com'`;
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
