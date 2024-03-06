@@ -51,7 +51,7 @@ export default {
             const emailTratado = emailstring.split('@')
             const usuario = await prisma.$queryRaw`
             SELECT * FROM "Usuario"
-            WHERE "email" ILIKE '%' || ${emailTratado[0]} || '%'
+            WHERE "email" LIKE '%' || ${emailTratado[0]} || '%'
             `
 
             if (!usuario) return res.json({ error: "usuario não existe" })
