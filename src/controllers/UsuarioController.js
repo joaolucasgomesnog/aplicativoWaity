@@ -48,7 +48,7 @@ export default {
 
         try {
             const { emailstring } = req.params
-            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = 'lucasgomes145987@gmail.com'`;
+            const usuario = await prisma.$queryRaw`SELECT * FROM "Usuario" WHERE email = ${emailstring}`;
 
             if (!usuario) return res.json({ error: "usuario não existe" })
             console.log('Usuario:', usuario)
