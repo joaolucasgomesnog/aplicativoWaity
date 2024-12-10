@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "dev": "nodemon src/server.js",
-    "vercel-build": "npx prisma migrate deploy && npx prisma generate"
+    "vercel-build": "npx prisma migrate deploy && npx prisma generate",
+    "apk": "eas build -p android --profile preview"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",

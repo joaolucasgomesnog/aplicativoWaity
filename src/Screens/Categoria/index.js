@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Pressable, ScrollView, RefreshControl } from 'react-native';
 import Header from '../../components/Header';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 import { auth } from '../../Services/FireBaseConfig';
+import * as React from 'react'
 
 
 export default function Categoria({ navigation, route }) {
@@ -26,6 +27,13 @@ export default function Categoria({ navigation, route }) {
             })
     }
 
+    const onRefresh = React.useCallback(() => {
+        setLoading(true);
+        setTimeout(() => {
+          getSolicitacoes()
+          setLoading(false);
+        }, 2000);
+      }, []);
 
     function formatarData(dataUTC) {
         const data = new Date(dataUTC);
@@ -59,13 +67,13 @@ export default function Categoria({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Header profile={false} back={true} screenName={screenName} navigateTo={() => navigation.navigate('Home')} />
-            <Loading loading={loading} />
+
             <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Solicitacao', { tipo: `${categoria}`, screenName:screenName})}>
                 <Text style={styles.buttonTitle}>Solicitar</Text>
             </TouchableOpacity>
             <StatusBar style="auto" />
             <Text style={styles.title}>Últimas solicitações</Text>
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollsolcitacoes}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollsolcitacoes} refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} colors={['red']}/>}>
 
             <View style={styles.news}>
                 {

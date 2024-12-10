@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     View,
     TextInput,
-    ViewBase
+    ViewBase,
+    ScrollView
 } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -43,6 +44,7 @@ export default function Solicitacao({ navigation, route }) {
 
             })
     }
+    
 
     const getStatusList = () => {
         fetch(`https://aplicativo-logistica-api.vercel.app/status`)
@@ -162,124 +164,125 @@ export default function Solicitacao({ navigation, route }) {
         <View style={styles.container}>
             <Header profile={false} back={true} screenName='Solicitação' navigateTo={() => navigation.navigate('Categoria', { categoria: tipo, screenName: screenName })} />
             <Loading loading={loading} />
-            <TouchableOpacity style={styles.actionButton} onPress={() => handleSolicitacao()}>
-                <Text style={styles.buttonTitle}>Enviar</Text>
-            </TouchableOpacity>
+            <ScrollView>
 
-            <StatusBar style="auto" />
-            <Text style={styles.title}>Formulário</Text>
+                <StatusBar style="auto" />
+                <Text style={styles.title}>Formulário</Text>
 
-            <View style={{ paddingHorizontal: 16 }}>
-                <Text>Item</Text>
-                <View pointerEvents={editavel ? "auto" : "none"} >
-                    <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        data={itemList.map(item => ({ label: item.descricao, value: item.id }))}
-                        search
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Selecione um item' : '...'}
-                        searchPlaceholder="Buscar..."
-                        value={item}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={itemNew => {
-                            if (itemList.find((i) => i.id == itemNew.value).disponivel) {
-                                setItemDisponivel(true)
-                            } else {
-                                setItemDisponivel(false)
-                            }
-                            setItem(itemNew.value);
-                            setIsFocus(false);
-                        }}
-                    />
-                </View>
-                <Text>Unidade de destino</Text>
-                <View pointerEvents={editavel ? "auto" : "none"} >
-                    <Dropdown
-                        pointerEvents={editavel ? "auto" : "none"}
-                        style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        data={cidadeList.map(item => ({ label: item.descricao, value: item.id }))}
-                        search
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Selecione uma unidade' : '...'}
-                        searchPlaceholder="Buscar..."
-                        value={cidade}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={cidadeNew => {
-                            setCidade(cidadeNew.value);
-                            setIsFocus(false);
-                        }}
-                    />
-                </View>
-                <Text>Quantidade</Text>
-                <View style={styles.quantityButton} pointerEvents={editavel ? "auto" : "none"} >
-                    <TouchableOpacity onPress={() => { quantidade > 1 ? setQuantidade(quantidade - 1) : console.log(quantidade) }}>
-                        <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
-                    </TouchableOpacity>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <Text>Item</Text>
+                    <View pointerEvents={editavel ? "auto" : "none"} >
+                        <Dropdown
+                            style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                            placeholderStyle={styles.placeholderStyle}
+                            selectedTextStyle={styles.selectedTextStyle}
+                            inputSearchStyle={styles.inputSearchStyle}
+                            iconStyle={styles.iconStyle}
+                            data={itemList.map(item => ({ label: item.descricao, value: item.id }))}
+                            search
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder={!isFocus ? 'Selecione um item' : '...'}
+                            searchPlaceholder="Buscar..."
+                            value={item}
+                            onFocus={() => setIsFocus(true)}
+                            onBlur={() => setIsFocus(false)}
+                            onChange={itemNew => {
+                                if (itemList.find((i) => i.id == itemNew.value).disponivel) {
+                                    setItemDisponivel(true)
+                                } else {
+                                    setItemDisponivel(false)
+                                }
+                                setItem(itemNew.value);
+                                setIsFocus(false);
+                            }}
+                        />
+                    </View>
+                    <Text>Unidade de destino</Text>
+                    <View pointerEvents={editavel ? "auto" : "none"} >
+                        <Dropdown
+                            pointerEvents={editavel ? "auto" : "none"}
+                            style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                            placeholderStyle={styles.placeholderStyle}
+                            selectedTextStyle={styles.selectedTextStyle}
+                            inputSearchStyle={styles.inputSearchStyle}
+                            iconStyle={styles.iconStyle}
+                            data={cidadeList.map(item => ({ label: item.descricao, value: item.id }))}
+                            search
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder={!isFocus ? 'Selecione uma unidade' : '...'}
+                            searchPlaceholder="Buscar..."
+                            value={cidade}
+                            onFocus={() => setIsFocus(true)}
+                            onBlur={() => setIsFocus(false)}
+                            onChange={cidadeNew => {
+                                setCidade(cidadeNew.value);
+                                setIsFocus(false);
+                            }}
+                        />
+                    </View>
+                    <Text>Quantidade</Text>
+                    <View style={styles.quantityButton} pointerEvents={editavel ? "auto" : "none"} >
+                        <TouchableOpacity onPress={() => { quantidade > 1 ? setQuantidade(quantidade - 1) : console.log(quantidade) }}>
+                            <FontAwesome5 name="minus" size={15} color={quantidade > 1 ? "black" : "gray"} />
+                        </TouchableOpacity>
 
-                    <TextInput placeholder='1' value={String(quantidade)} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
+                        <TextInput placeholder='1' value={String(quantidade)} keyboardType='numeric' style={{ width: 50, textAlign: 'center', fontWeight: 'bold' }} onChangeText={quantidadeNew => { setQuantidade(parseInt(quantidadeNew)) }} />
 
-                    <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
-                        <FontAwesome5 name="plus" size={15} color="black" />
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity onPress={() => { setQuantidade(quantidade + 1) }}>
+                            <FontAwesome5 name="plus" size={15} color="black" />
+                        </TouchableOpacity>
+                    </View>
 
-                <Text>Observação</Text>
-                <TextInput style={styles.textArea} multiline={true} value={observacao} editable={editavel} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
-                {
-                    solicitacaoId != null && solicitacaoId != undefined ? (
-                        <>
-                            <Text style={{ marginTop: 10 }}>Status</Text>
-                            <Dropdown
+                    <Text>Observação</Text>
+                    <TextInput style={styles.textArea} multiline={true} value={observacao} editable={editavel} placeholder='Insira uma observação' placeholderTextColor={'gray'} onChangeText={observacaoNew => { setObservacao(observacaoNew) }} />
+                    {
+                        solicitacaoId != null && solicitacaoId != undefined ? (
+                            <>
+                                <Text style={{ marginTop: 10 }}>Status</Text>
+                                <Dropdown
 
-                                style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
-                                placeholderStyle={styles.placeholderStyle}
-                                selectedTextStyle={styles.selectedTextStyle}
-                                inputSearchStyle={styles.inputSearchStyle}
-                                iconStyle={styles.iconStyle}
-                                data={statusList.map(item => ({ label: item.descricao, value: item.id }))}
-                                search
-                                maxHeight={300}
-                                labelField="label"
-                                valueField="value"
-                                placeholder={!isFocus ? 'Marque um status' : '...'}
-                                searchPlaceholder="Search..."
-                                value={status}
-                                onFocus={() => setIsFocus(true)}
-                                onBlur={() => setIsFocus(false)}
-                                onChange={statusNew => {
-                                    setStatus(parseInt(statusNew.value));
-                                    setIsFocus(false);
-                                }}
-                            />
-                            <Text>Solicitante:</Text>
-                            <View style={styles.quantityButton}>
-                                <Text>{`${solicitante}`}</Text>
+                                    style={[styles.dropdown, isFocus && { borderColor: 'red' }]}
+                                    placeholderStyle={styles.placeholderStyle}
+                                    selectedTextStyle={styles.selectedTextStyle}
+                                    inputSearchStyle={styles.inputSearchStyle}
+                                    iconStyle={styles.iconStyle}
+                                    data={statusList.map(item => ({ label: item.descricao, value: item.id }))}
+                                    search
+                                    maxHeight={300}
+                                    labelField="label"
+                                    valueField="value"
+                                    placeholder={!isFocus ? 'Marque um status' : '...'}
+                                    searchPlaceholder="Search..."
+                                    value={status}
+                                    onFocus={() => setIsFocus(true)}
+                                    onBlur={() => setIsFocus(false)}
+                                    onChange={statusNew => {
+                                        setStatus(parseInt(statusNew.value));
+                                        setIsFocus(false);
+                                    }}
+                                />
+                                <Text>Solicitante:</Text>
+                                <View style={styles.quantityButton}>
+                                    <Text>{`${solicitante}`}</Text>
+                                </View>
+                            </>
+                        ) : itemDisponivel != true ? (
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20, flexDirection: 'row', gap: 10 }}>
+                                <FontAwesome5 name="exclamation-triangle" size={15} color="red" />
+                                <Text style={styles.aviso}>Item não disponivel</Text>
                             </View>
-                        </>
-                    ) : itemDisponivel != true ? (
-                        <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20, flexDirection:'row', gap: 10}}>
-                            <FontAwesome5 name="exclamation-triangle" size={15} color="red" />
-                            <Text style={styles.aviso}>Item não disponivel</Text>
-                        </View>
-                    ) : null
+                        ) : null
 
-                }
-            </View>
-
+                    }
+                <TouchableOpacity style={styles.actionButton} onPress={() => handleSolicitacao()}>
+                    <Text style={styles.buttonTitle}>Enviar</Text>
+                </TouchableOpacity>
+                </View>
+            </ScrollView>
         </View >
     );
 }
@@ -357,8 +360,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 4,
-        position: 'absolute',
-        bottom: 20,
+        marginTop:50,
 
         justifyContent: 'center',
         fontSize: 18,
@@ -440,11 +442,11 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         color: 'black'
     },
-    aviso : {
-        color:'red',
+    aviso: {
+        color: 'red',
         fontWeight: "bold",
         fontSize: 16,
-        
+
 
 
     }
